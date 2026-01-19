@@ -1,2 +1,50 @@
-# projet-web
-Cours de projet web | EFREI
+# Projet Web EFREI
+
+## Auteurs
+- Orden14 (Thomas L.)
+- Niceley (David W.)
+- Ahucha (Antoine H.)
+- [Repository link](https://github.com/Orden14/projet-web)
+
+
+## Utiliser le projet localement
+
+### Prerequis
+- Composer 2.7 or supérieur [\<link\>](https://getcomposer.org/doc/00-intro.md)
+- Symfony CLI [\<link\>](https://symfony.com/download#step-1-install-symfony-cli)
+- Node 20 or supérieur [\<link\>](https://nodejs.org/en/download/)
+- Yarn 1.22 or supérieur [\<link\>](https://yarnpkg.com/getting-started/install)
+- PHP 8.2 or supérieur [\<link\>](https://www.php.net/downloads)
+- Docker 27 or supérieur [\<link\>](https://docs.docker.com/get-docker/)
+
+### Installation pour environnement de développement
+1. Cloner le repository et accéder au dossier du projet :
+```bash
+git clone https://github.com/Orden14/projet-web
+
+cd projet-web
+```
+
+2. Installer les dépendances et construire le projet :
+```bash
+yarn dependencies
+```
+
+3. Exécuter le docker compose pour avoir la base de données et PhpMyAdmin : 
+```bash
+docker-compose up -d
+```
+
+4. Créer la base de données avec les données de test :
+```bash
+yarn truncate-database
+```
+
+5. Lancer le serveur de développement
+```bash
+yarn server-start
+```
+
+### Accéder au projet et aux outils sur l'environnement de développement
+- L'application est disponible sur `http://localhost:8000`
+- PhpMyAdmin est disponible sur `http://localhost:8080` (username : root / mdp : pass123)

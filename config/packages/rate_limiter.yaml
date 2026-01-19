@@ -1,0 +1,14 @@
+framework:
+    rate_limiter:
+        authentication_request:
+            policy: 'fixed_window'
+            limit: 5
+            interval: '5 minute'
+
+when@test:
+    framework:
+        rate_limiter:
+            authentication_request:
+                policy: 'fixed_window'
+                limit: 999
+                interval: '1 minute'
