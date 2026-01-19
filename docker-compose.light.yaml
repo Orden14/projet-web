@@ -1,0 +1,19 @@
+services:
+    db:
+        image: yobasystems/alpine-mariadb:11.4.9
+        container_name: db_projetweb
+        restart: 'no'
+        volumes:
+            - db-data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: pass123
+        ports:
+            - "3306:3306"
+        networks:
+            - dev
+
+networks:
+    dev:
+
+volumes:
+    db-data:

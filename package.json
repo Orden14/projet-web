@@ -1,0 +1,62 @@
+{
+    "name": "les-heraia-web",
+    "version": "1.0.0",
+    "description": "les heraia website",
+    "repository": "https://github.com/Orden14/LesHeraiaWeb.git",
+    "author": "Orden14",
+    "license": "GPL-3.0",
+    "scripts": {
+        "server-start": "symfony server:start --port=8000",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress",
+        "dependencies": "composer install && yarn install && yarn build && php vendor/bin/codecept build",
+        "truncate-database": "symfony console d:d:d --if-exists --force && symfony console d:d:c && symfony console d:s:u --force && symfony console d:f:l -n",
+        "truncate-database-test": "symfony console --env=test d:d:d --if-exists --force && symfony console --env=test d:d:c && symfony console --env=test d:s:u --force && symfony console --env=test d:f:l -n",
+        "test": "vendor/bin/codecept clean && yarn truncate-database-test && vendor/bin/codecept run --ext DotReporter",
+        "prepare": "husky"
+    },
+    "lint-staged": {
+        "*.php": [
+            "vendor/bin/php-cs-fixer fix --config .php-cs-fixer.dist.php"
+        ],
+        "*.(js|html|css)": [
+            "prettier --write --tab-width 4"
+        ],
+        "*.js": [
+            "eslint --fix"
+        ]
+    },
+    "prettier": {
+        "printWidth": 200
+    },
+    "dependencies": {
+        "@babel/core": "^7.17.0",
+        "@babel/preset-env": "^7.16.0",
+        "@hotwired/stimulus": "^3.2.2",
+        "@popperjs/core": "^2.11.8",
+        "@symfony/webpack-encore": "^5.0.1",
+        "autoprefixer": "^10.4.20",
+        "core-js": "^3.38.1",
+        "eslint-config-standard": "^17.1.0",
+        "jquery": "^3.7.1",
+        "jquery-confirm": "^3.3.4",
+        "postcss": "^8.4.47",
+        "postcss-loader": "^8.1.1",
+        "sass": "^1.80.4",
+        "sass-loader": "^16.0.2",
+        "tailwindcss": "^3.4.14",
+        "webpack": "^5.95.0",
+        "webpack-cli": "^5.1.4"
+    },
+    "devDependencies": {
+        "@hotwired/turbo": "^7.1.1 || ^8.0",
+        "@symfony/stimulus-bridge": "^3.2.0",
+        "eslint": "^9.13.0",
+        "eslint-plugin-import": "^2.31.0",
+        "eslint-plugin-n": "^17.11.1",
+        "eslint-plugin-promise": "^7.1.0",
+        "husky": "^9.1.6",
+        "lint-staged": "^15.2.10",
+        "prettier": "^3.3.3"
+    }
+}
