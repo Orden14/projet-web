@@ -48,3 +48,11 @@ yarn server-start
 ### Accéder au projet et aux outils sur l'environnement de développement
 - L'application est disponible sur `http://localhost:8000`
 - PhpMyAdmin est disponible sur `http://localhost:8080` (username : root / mdp : pass123)
+
+### Utilisateurs de tests
+- Admin :
+  - email : admin@test.fr
+  - mdp : admin
+- Utilisateur standard :
+    - email : user@test.fr
+    - mdp : user
