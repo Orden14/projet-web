@@ -29,6 +29,7 @@ final class UserTest extends AbstractEntityTest
             ->setUsername('testUsername')
             ->setRole(RolesEnum::USER)
             ->setPassword($this->userPasswordHasher->hashPassword($user, 'testPassword123'))
+            ->setProfilePicture('path/to/profile/picture.jpg')
         ;
 
         return $user;
@@ -44,6 +45,7 @@ final class UserTest extends AbstractEntityTest
         $this->tester->assertEquals('testUsername', $generatedEntity->getUsername());
         $this->tester->assertEquals(RolesEnum::USER, $generatedEntity->getRole());
         $this->tester->assertTrue($this->userPasswordHasher->isPasswordValid($generatedEntity, 'testPassword123'));
+        $this->assertEquals('path/to/profile/picture.jpg', $generatedEntity->getProfilePicture());
     }
 
     /**
