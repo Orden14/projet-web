@@ -6,6 +6,7 @@
 
 {% block body %}
     <form method="post" class="max-w-md mx-auto mt-8 p-6 bg-white shadow-md rounded">
+        <h1 class="text-2xl font-semibold mb-6" style="text-align:center;">MyDrive</h1>
         {% if error %}
             <div id="login-error-flash" class="mb-4 p-4 text-red-700 bg-red-100 rounded">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
