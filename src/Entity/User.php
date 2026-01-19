@@ -18,10 +18,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 180)]
-    private ?string $email = null;
+    private string $email;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private ?string $username = null;
+    private string $username;
 
     /**
      * @var array<string>
@@ -32,12 +32,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private ?string $password = null;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $profilePicture;
+
     final public function getId(): ?int
     {
         return $this->id;
     }
 
-    final public function getEmail(): ?string
+    final public function getEmail(): string
     {
         return $this->email;
     }
@@ -49,7 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    final public function getUsername(): ?string
+    final public function getUsername(): string
     {
         return $this->username;
     }
@@ -129,5 +132,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     final public function eraseCredentials(): void
     {
         // Unimplemented
+    }
+
+    final public function getProfilePicture(): string
+    {
+        return $this->profilePicture;
+    }
+
+    final public function setProfilePicture(string $profilePicture): self
+    {
+        $this->profilePicture = $profilePicture;
+
+        return $this;
     }
 }
