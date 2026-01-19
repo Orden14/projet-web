@@ -1,0 +1,14 @@
+{% set route = app.request.attributes.get('_route') %}
+{% set admin_routes = ['admin_'] %}
+{% set is_on_admin_page = admin_routes|filter(routeName => route starts with routeName)|length > 0 %}
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle {{ is_on_admin_page ? 'active' : '' }}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Administration
+    </a>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">Utilisateurs</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#">Paramètres</a></li>
+    </ul>
+</li>

@@ -36,6 +36,9 @@
         "@popperjs/core": "^2.11.8",
         "@symfony/webpack-encore": "^5.0.1",
         "autoprefixer": "^10.4.20",
+        "bootstrap": "^5.3.8",
+        "bootstrap-icons": "^1.13.1",
+        "bootstrap-select": "^1.13.18",
         "core-js": "^3.38.1",
         "eslint-config-standard": "^17.1.0",
         "jquery": "^3.7.1",
@@ -44,7 +47,6 @@
         "postcss-loader": "^8.1.1",
         "sass": "^1.80.4",
         "sass-loader": "^16.0.2",
-        "tailwindcss": "^3.4.14",
         "webpack": "^5.95.0",
         "webpack-cli": "^5.1.4"
     },
