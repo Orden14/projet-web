@@ -1,4 +1,4 @@
-# Projet Web EFREI
+# Projet Web EFREI (MyDrive)
 
 ## Auteurs
 - Orden14 (Thomas L.)
@@ -6,6 +6,11 @@
 - Ahucha (Antoine H.)
 - [Repository link](https://github.com/Orden14/projet-web)
 
+<div align="center">
+    <h4>Projet MyDrive</h4>
+    <p>Cours projet web EFREI Paris</p>
+    <img src="/public/logo/logo.png" alt="MyDrive" height="320px">
+</div>
 
 ## Utiliser le projet localement
 
