@@ -1,35 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-    Connexion
-{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block header %}{% endblock %}
 
 {% block body %}
-    <form method="post" class="max-w-md mx-auto mt-8 p-6 bg-white shadow-md rounded">
-        <h1 class="text-2xl font-semibold mb-6" style="text-align:center;">MyDrive</h1>
-        {% if error %}
-            <div id="login-error-flash" class="mb-4 p-4 text-red-700 bg-red-100 rounded">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+    <div class="container py-5">
+        <img src="{{ asset('logo/logo.png') }}" alt="Logo" class="d-block mx-auto mb-4 rounded-circle" style="height: 150px;">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        {% if error %}
+                            <div id="login-error-flash" class="alert alert-danger">
+                                {{ error.messageKey|trans(error.messageData, 'security') }}
+                            </div>
+                        {% endif %}
 
-        <h1 class="text-2xl font-semibold mb-6">Connexion</h1>
+                        <h2 class="h4 mb-3 text-center">Connexion</h2>
 
-        <label for="email" class="block text-gray-700">Adresse email</label>
-        <input type="email" value="{{ last_email }}" name="email" id="email" class="w-full p-2 mb-4 border border-gray-300 rounded" autocomplete="email" required autofocus>
+                        <form method="post">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Adresse email</label>
+                                <input type="email" value="{{ last_email }}" name="email" id="email" class="form-control" autocomplete="email" required autofocus>
+                            </div>
 
-        <label for="password" class="block text-gray-700">Mot de passe</label>
-        <input type="password" name="password" id="password" class="w-full p-2 mb-4 border border-gray-300 rounded" autocomplete="current-password" required>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Mot de passe</label>
+                                <input type="password" name="password" id="password" class="form-control" autocomplete="current-password" required>
+                            </div>
 
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-        <div class="mb-4">
-            <input type="checkbox" name="_remember_me" id="_remember_me" class="mr-2">
-            <label for="_remember_me" class="text-gray-700">Rester connecté</label>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" name="_remember_me" id="_remember_me">
+                                <label class="form-check-label" for="_remember_me">Rester connecté</label>
+                            </div>
+
+                            <button id="login-button" class="btn btn-primary w-100" type="submit">
+                                Se connecter </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <button id="login-button" class="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600" type="submit">
-            Se connecter
-        </button>
-    </form>
+    </div>
 {% endblock %}
