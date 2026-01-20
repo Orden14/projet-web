@@ -196,3 +196,32 @@
 .filter.open .filter-menu {
   display: block;
 }
+
+.row-menu {
+  top: 100%;
+  right: 0;
+  margin-top: 6px;
+}
+
+.row-menu--top {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: 6px;
+}
+
+.row-menu-item {
+  display: flex;
+  width: 100%;
+  padding: 8px 14px;
+  border: none;
+  background: transparent;
+  color: #344054;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.row-menu-item:hover {
+  background-color: #f3f4f6;
+}

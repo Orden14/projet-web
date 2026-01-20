@@ -17,8 +17,9 @@ export default class extends Controller {
 
     filterByType(event) {
         event.preventDefault();
-        const selectedText = event.currentTarget.textContent.trim();
-        this.filters.type = selectedText === "Type" ? null : selectedText;
+        const selectedType = event.currentTarget.dataset.type;
+        this.filters.type = selectedType || null;
+        this.setClearButtonVisibility("type", !!this.filters.type);
         this.applyAllFilters();
     }
 
@@ -26,6 +27,7 @@ export default class extends Controller {
         event.preventDefault();
         const selectedText = event.currentTarget.textContent.trim();
         this.filters.category = selectedText === "Catégorie" ? null : selectedText;
+        this.setClearButtonVisibility("category", !!this.filters.category);
         this.applyAllFilters();
     }
 
@@ -33,7 +35,46 @@ export default class extends Controller {
         event.preventDefault();
         const selectedText = event.currentTarget.textContent.trim();
         this.filters.date = selectedText === "Date de modification" ? null : selectedText;
+        this.setClearButtonVisibility("date", !!this.filters.date);
         this.applyAllFilters();
+    }
+
+    clearTypeFilter(event) {
+        event.preventDefault();
+        this.filters.type = null;
+        this.resetFilterButtonLabel("type", "Type");
+        this.setClearButtonVisibility("type", false);
+        this.applyAllFilters();
+    }
+
+    clearCategoryFilter(event) {
+        event.preventDefault();
+        this.filters.category = null;
+        this.resetFilterButtonLabel("category", "Catégorie");
+        this.setClearButtonVisibility("category", false);
+        this.applyAllFilters();
+    }
+
+    clearDateFilter(event) {
+        event.preventDefault();
+        this.filters.date = null;
+        this.resetFilterButtonLabel("date", "Date de modification");
+        this.setClearButtonVisibility("date", false);
+        this.applyAllFilters();
+    }
+
+    resetFilterButtonLabel(group, defaultLabel) {
+        const button = this.element.querySelector(`.filter-pill[data-filter-group="${group}"]`);
+        if (button) {
+            button.innerHTML = `${defaultLabel} <span class="caret">▾</span>`;
+        }
+    }
+
+    setClearButtonVisibility(group, isVisible) {
+        const clearButton = this.element.querySelector(`.filter-clear[data-filter-group="${group}"]`);
+        if (clearButton) {
+            clearButton.hidden = !isVisible;
+        }
     }
 
     applyAllFilters() {
