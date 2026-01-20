@@ -1,49 +1,121 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Accueil
+Accueil
 {% endblock %}
 
 {% block body %}
-    <h2>Mes ressources</h2>
-    <div class="ressources-section">
-        <div class="ressources-header">
-            <div class="search-container">
-                <input type="text" class="search-bar" placeholder="Barre de recherche">
-                <button class="search-button"><i class="bi bi-filter"></i></button>
+<h2>Mes ressources</h2>
+<div class="ressources-section" data-controller="filter">
+    <div class="ressources-header">
+        <div class="search-container">
+            <input type="text" class="search-bar" placeholder="Recherche par nom" data-filter-target="source" data-action="input->filter#filter">
+        </div>
+        <button class="add-button"><i class="bi bi-plus"></i> Ajouter</button>
+    </div>
+
+    <div class="folders-section">
+        <div class="section-header">
+            <h3>Mes dossiers</h3>
+        </div>
+        <div class="folders-container">
+            <div class="folder-card">
+                <div class="folder-icon">
+                    <i class="bi bi-folder"></i>
+                </div>
+                <div class="folder-info">
+                    <h4>Cours</h4>
+                </div>
+                <button class="folder-options">
+                    <i class="bi bi-three-dots-vertical"></i>
+                </button>
             </div>
-            <button class="add-button"><i class="bi bi-plus"></i> Ajouter</button>
+
+            <div class="folder-card">
+                <div class="folder-icon">
+                    <i class="bi bi-folder"></i>
+                </div>
+                <div class="folder-info">
+                    <h4>Projet Web</h4>
+                </div>
+                <button class="folder-options">
+                    <i class="bi bi-three-dots-vertical"></i>
+                </button>
+            </div>  
+        </div>
+    </div>
+
+    <div class="files-section">
+        <div class="section-header">
+            <h3>Mes fichiers</h3>
         </div>
 
-        <table id="ressourcesTable" class="table table-striped table-hover">
+        <div class="filters">
+          <div class="filter" data-controller="filter-select-menu">
+            <button class="filter-pill" data-action="click->filter-select-menu#toggle">Type <span class="caret">▾</span></button>
+            <div class="filter-menu" data-filter-select-menu-target="menu">
+              <button data-action="click->filter-select-menu#selectOption click->filter#filterByType"><span class="ico">📄</span> Document</button>
+              <button data-action="click->filter-select-menu#selectOption click->filter#filterByType"><span class="ico">🔗</span> Lien</button>
+              <button data-action="click->filter-select-menu#selectOption click->filter#filterByType"><span class="ico">📝</span> Note</button>
+              <button data-action="click->filter-select-menu#selectOption click->filter#filterByType"><span class="ico">🗓️</span> Événement</button>
+              <button data-action="click->filter-select-menu#selectOption click->filter#filterByType"><span class="ico">👤</span> Contact</button>
+            </div>
+          </div>
+
+          <div class="filter" data-controller="filter-select-menu">
+            <button class="filter-pill" data-action="click->filter-select-menu#toggle">Catégorie <span class="caret">▾</span></button>
+            <div class="filter-menu" data-filter-select-menu-target="menu">
+              <button data-action="click->filter-select-menu#selectOption click->filter#filterByCategory">Rapport</button>
+              {# Catégories dynamiques #}
+            </div>
+          </div>
+
+          <div class="filter" data-controller="filter-select-menu">
+            <button class="filter-pill" data-action="click->filter-select-menu#toggle">Date de modification <span class="caret">▾</span></button>
+            <div class="filter-menu" data-filter-select-menu-target="menu">
+              <button data-action="click->filter-select-menu#selectOption click->filter#filterByDate">Aujourd'hui</button>
+              <button data-action="click->filter-select-menu#selectOption click->filter#filterByDate">7 derniers jours</button>
+              <button data-action="click->filter-select-menu#selectOption click->filter#filterByDate">30 derniers jours</button>
+              <button data-action="click->filter-select-menu#selectOption click->filter#filterByDate">Cette année</button>
+              <button data-action="click->filter-select-menu#selectOption click->filter#filterByDate">Année dernière</button>
+            </div>
+          </div>
+        </div>
+
+        <table id="ressourcesTable" class="table table-hover">
             <thead>
                 <tr>
                     <th>Nom</th>
                     <th>Type</th>
-                    <th>Date</th>
-                    <th>Actions</th>
+                    <th>Catégorie</th>
+                    <th>Dernière modification</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr data-filter-target="row">
                     <td>Document 1</td>
-                    <td>PDF</td>
+                    <td>Document</td>
+                    <td>Rapport</td>
                     <td>2026-01-15</td>
-                    <td><button class="btn btn-sm btn-primary">Voir</button></td>
+                    <td><button class="btn btn-sm"><i class="bi bi-three-dots-vertical"></i></button></td>
                 </tr>
-                <tr>
+                <tr data-filter-target="row">
                     <td>Présentation 2</td>
-                    <td>PowerPoint</td>
+                    <td>Document</td>
+                    <td>Rapport</td>
                     <td>2026-01-18</td>
-                    <td><button class="btn btn-sm btn-primary">Voir</button></td>
+                    <td><button class="btn btn-sm"><i class="bi bi-three-dots-vertical"></i></button></td>
                 </tr>
-                <tr>
+                <tr data-filter-target="row">
                     <td>Feuille de calcul 3</td>
-                    <td>Excel</td>
+                    <td>Lien</td>
+                    <td>Rapport</td>
                     <td>2026-01-20</td>
-                    <td><button class="btn btn-sm btn-primary">Voir</button></td>
+                    <td><button class="btn btn-sm"><i class="bi bi-three-dots-vertical"></i></button></td>
                 </tr>
             </tbody>
         </table>
     </div>
+</div>
 {% endblock %}
