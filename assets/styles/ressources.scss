@@ -3,6 +3,7 @@
   padding: 2rem;
   border-radius: 0.5rem;
   background-color: white;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
 
   h2 {
     color: #495057;
@@ -14,6 +15,11 @@
     color: #6c757d;
     font-size: 0.95rem;
   }
+}
+
+.ressources-dropzone-active {
+  background-color: #f5f7ff;
+  box-shadow: 0 0 0 1px #d0d5ff, 0 0 0 4px rgba(53, 96, 255, 0.15);
 }
 
 .ressources-header {

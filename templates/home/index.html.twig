@@ -7,7 +7,8 @@ Accueil
 
 {% block body %}
 <h2>Mes ressources</h2>
-<div class="ressources-section" data-controller="filter">
+<div class="ressources-section" data-controller="filter drag-and-drop"
+     data-action="dragenter->drag-and-drop#onDragEnter dragover->drag-and-drop#onDragOver dragleave->drag-and-drop#onDragLeave drop->drag-and-drop#onDrop">
     <div class="ressources-header">
         <div class="search-container">
             <input type="text" class="search-bar" placeholder="Recherche par nom" data-filter-target="source" data-action="input->filter#filter">
