@@ -14,7 +14,7 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body>
+    <body {{ stimulus_controller("datatable") }}>
         <div class="d-flex" style="min-height: 100vh; background-color: #f7f9fc;">
             {% block sidebar %}
                 {{ include('components/navbar/_sidebar.html.twig') }}
