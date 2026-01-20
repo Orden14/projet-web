@@ -38,6 +38,7 @@ abstract class AbstractRessource extends AbstractUserOwnedEntity implements Ress
 
     public function __construct()
     {
+        parent::__construct();
         $this->tags = new ArrayCollection();
     }
 

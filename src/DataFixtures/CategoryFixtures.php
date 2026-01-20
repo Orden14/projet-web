@@ -25,9 +25,11 @@ final class CategoryFixtures extends Fixture implements DependentFixtureInterfac
         foreach ($users as $user) {
             foreach (self::CATEGORIES as $category) {
                 $this->categoryFactory->build($category, $user);
-                $this->categoryFactory->persistEntity();
+                $manager->persist($this->categoryFactory->grabEntity());
             }
         }
+
+        $manager->flush();
     }
 
     /**

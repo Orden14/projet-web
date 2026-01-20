@@ -4,6 +4,7 @@ namespace App\Entity\node;
 
 use App\Entity\Category;
 use App\Entity\User;
+use DateTime;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -29,12 +30,17 @@ abstract class AbstractUserOwnedEntity
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private DateTimeInterface $creationDate;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private DateTimeInterface $updateDate;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DateTimeInterface $updateDate = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private Category $category;
+
+    public function __construct()
+    {
+        $this->creationDate = new DateTime();
+    }
 
     final public function getId(): ?int
     {
@@ -77,7 +83,7 @@ abstract class AbstractUserOwnedEntity
         return $this;
     }
 
-    final public function getCreationDate(): DateTimeInterface
+    final public function getCreationDate(): ?DateTimeInterface
     {
         return $this->creationDate;
     }

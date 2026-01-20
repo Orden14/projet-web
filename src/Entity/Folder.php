@@ -11,9 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: FolderRepository::class)]
 class Folder extends AbstractRessource
 {
-    #[ORM\Column(length: 255)]
-    private string $name;
-
     /**
      * @var Collection<int, AbstractRessource>
      */
@@ -24,18 +21,6 @@ class Folder extends AbstractRessource
     {
         parent::__construct();
         $this->children = new ArrayCollection();
-    }
-
-    final public function getName(): string
-    {
-        return $this->name;
-    }
-
-    final public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     /**

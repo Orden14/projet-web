@@ -3,9 +3,9 @@
 namespace App\DataFixtures;
 
 use App\DataFixtures\util\UserOwnedEntityDataGenerator;
-use App\Entity\CalendarEvent;
+use App\Entity\Contact;
 use App\Entity\User;
-use App\Factory\CalendarEventFactory;
+use App\Factory\ContactFactory;
 use App\Repository\UserRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -13,13 +13,13 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
 
-final class CalendarEventFixtures extends Fixture implements DependentFixtureInterface
+final class ContactFixtures extends Fixture implements DependentFixtureInterface
 {
     private Generator $faker;
 
     public function __construct(
+        private readonly ContactFactory $contactFactory,
         private readonly UserRepository $userRepository,
-        private readonly CalendarEventFactory $calendarEventFactory,
         private readonly UserOwnedEntityDataGenerator $userOwnedEntityDataGenerator,
     ) {
         $this->faker = Factory::create();
@@ -30,23 +30,26 @@ final class CalendarEventFixtures extends Fixture implements DependentFixtureInt
         $users = $this->userRepository->findAll();
 
         foreach ($users as $user) {
-            for ($i = 0; $i < 6; $i++) {
-                $manager->persist($this->createCalendarEventForUser($user));
+            for ($i = 0; $i < 3; $i++) {
+                $manager->persist($this->generateContactForUser($user));
             }
         }
 
         $manager->flush();
     }
 
-    private function createCalendarEventForUser(User $user): CalendarEvent
+    private function generateContactForUser(User $user): Contact
     {
         $userOwnedEntityData = $this->userOwnedEntityDataGenerator->generateRandomData($user);
-        $randomStartDate = $this->faker->dateTimeBetween('-1 months', '+1 months');
-        $randomEndDate = $this->faker->dateTimeBetween($randomStartDate, '+1 months');
 
-        $this->calendarEventFactory->build($userOwnedEntityData, $randomStartDate, $randomEndDate);
+        $this->contactFactory->build(
+            $userOwnedEntityData,
+            $this->faker->name(),
+            $this->faker->phoneNumber(),
+            $this->faker->email()
+        );
 
-        return $this->calendarEventFactory->grabEntity();
+        return $this->contactFactory->grabEntity();
     }
 
     /**

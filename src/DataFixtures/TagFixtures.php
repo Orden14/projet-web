@@ -13,7 +13,6 @@ final class TagFixtures extends Fixture implements DependentFixtureInterface
     private const TAGS = [
         'Bleu' => '#a5d2ff',
         'Rouge' => '#ff4e5b',
-        'Rose' => '#ffafaf',
     ];
 
     public function __construct(
@@ -29,9 +28,11 @@ final class TagFixtures extends Fixture implements DependentFixtureInterface
         foreach ($users as $user) {
             foreach (self::TAGS as $title => $color) {
                 $this->tagFactory->build($title, $color, $user);
-                $this->tagFactory->persistEntity();
+                $manager->persist($this->tagFactory->grabEntity());
             }
         }
+
+        $manager->flush();
     }
 
     /**

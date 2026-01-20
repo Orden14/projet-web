@@ -27,12 +27,13 @@ final class UserFixtures extends Fixture
     {
         if ($this->kernel->getEnvironment() === 'dev') {
             $this->purgeProfilePictureDirectory();
+            $this->purgeUploadsDirectory();
         }
 
         $this->generateAdmin();
         $this->generateCommonUser('user');
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 4; $i++) {
             $this->generateCommonUser();
         }
     }
@@ -61,6 +62,17 @@ final class UserFixtures extends Fixture
     private function purgeProfilePictureDirectory(): void
     {
         $files = new FilesystemIterator($this->parameterBag->get('profile_picture_directory'));
+
+        foreach ($files as $file) {
+            if ($file->isFile() && $file->getFilename() !== '.gitignore') {
+                unlink($file->getPathname());
+            }
+        }
+    }
+
+    private function purgeUploadsDirectory(): void
+    {
+        $files = new FilesystemIterator($this->parameterBag->get('uploads_directory'));
 
         foreach ($files as $file) {
             if ($file->isFile() && $file->getFilename() !== '.gitignore') {
