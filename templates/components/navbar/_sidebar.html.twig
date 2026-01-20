@@ -1,0 +1,18 @@
+<aside class="sidebar">
+    <div class="sidebar-logo">
+        <a href="{{ path('app_home') }}">
+            <img src="{{ asset('logo/logo.png') }}" alt="Logo" class="rounded-circle">
+        </a>
+    </div>
+
+    {% if app.user %}
+        <nav class="sidebar-nav">
+            {% include 'components/navbar/links/_ressources.html.twig' %}
+            {% include 'components/navbar/links/_calendar.html.twig' %}
+            {% include 'components/navbar/links/_contact.html.twig' %}
+            {% if is_granted('ROLE_ADMIN') %}
+                {% include 'components/navbar/links/admin/_administration.html.twig' %}
+            {% endif %}
+        </nav>
+    {% endif %}
+</aside>

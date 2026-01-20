@@ -6,3 +6,155 @@
 #userDropdown.dropdown-toggle::after {
   display: none;
 }
+
+.sidebar {
+  width: 200px;
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  min-height: 100vh;
+
+  .sidebar-logo {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #dee2e6;
+
+    a {
+      text-decoration: none;
+    }
+
+    img {
+      height: 60px;
+      width: 60px;
+    }
+  }
+
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    a, .nav-link {
+      padding: 10px 12px;
+      border-radius: 6px;
+      color: #495057;
+      text-decoration: none;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: #e9ecef;
+        color: #0d6efd;
+      }
+
+      &.active {
+        background-color: #0d6efd;
+        color: white;
+      }
+    }
+
+    li {
+      list-style: none;
+
+      .nav-link {
+        display: block;
+        padding: 10px 12px;
+      }
+    }
+  }
+}
+
+.top-header {
+  padding: 20px;
+
+  .header-content {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .search-bar {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+    max-width: 600px;
+
+    input {
+      flex: 1;
+      border: 1px solid #dee2e6;
+      padding: 10px 15px;
+      border-radius: 4px;
+
+      &:focus {
+        outline: none;
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+      }
+    }
+
+    .btn-search {
+      background-color: white;
+      border: 1px solid #dee2e6;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+
+      &:hover {
+        background-color: #f8f9fa;
+        border-color: #0d6efd;
+        color: #0d6efd;
+      }
+    }
+  }
+
+  .user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 60px;
+    padding: 10px;
+
+    .sidebar-logo {
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+
+      img {
+        height: 50px;
+        width: 50px;
+      }
+    }
+
+    .sidebar-nav {
+      gap: 10px;
+
+      a, .nav-link {
+        padding: 8px;
+        text-align: center;
+      }
+    }
+  }
+
+  .top-header {
+    padding: 15px;
+
+    .header-content {
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .search-bar {
+      flex-direction: column;
+      max-width: none;
+    }
+  }
+}
+
