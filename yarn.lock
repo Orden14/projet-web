@@ -2004,38 +2004,6 @@ data-view-byte-offset@^1.0.1:
     es-errors "^1.3.0"
     is-data-view "^1.0.1"
 
-datatables.net-bs5@^2, datatables.net-bs5@^2.3.6:
-  version "2.3.6"
-  resolved "https://registry.yarnpkg.com/datatables.net-bs5/-/datatables.net-bs5-2.3.6.tgz#88e9b015cb3d260f3e874f0f9ad16dc566b997da"
-  integrity sha512-oUNGjZrpNC2fY3l/6V4ijTC9kyVKU4Raons+RFmq2J7590rPn0c+5WAYKBx0evgW/CW7WfhStGBrU7+WJig6Og==
-  dependencies:
-    datatables.net "2.3.6"
-    jquery ">=1.7"
-
-datatables.net-select-bs5@^3.1.3:
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/datatables.net-select-bs5/-/datatables.net-select-bs5-3.1.3.tgz#e83eea84828b900e12bebc338f53be6c635dc463"
-  integrity sha512-1B/fzuEXTxXWnxOvaTiKkgUzVAYfaMLfBIlQ70NckLwQh65xKc64ptgxrd7zKwIM17SMu+uJC5wEmndooJjbhg==
-  dependencies:
-    datatables.net-bs5 "^2"
-    datatables.net-select "3.1.3"
-    jquery ">=1.7"
-
-datatables.net-select@3.1.3:
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/datatables.net-select/-/datatables.net-select-3.1.3.tgz#c872bad630010b27069cd7530411e12be7cf6495"
-  integrity sha512-IzikFqvYshnuPZVRi/xBvPcSMBNqzhzh9VGO0DtzsOU4w5uBLN/z9dOqAEUUJk1v6qkMOnBMg5NE/35cbdhPeQ==
-  dependencies:
-    datatables.net "^2"
-    jquery ">=1.7"
-
-datatables.net@2.3.6, datatables.net@^2:
-  version "2.3.6"
-  resolved "https://registry.yarnpkg.com/datatables.net/-/datatables.net-2.3.6.tgz#a11be57a2b50d7231cae2980a8ff1df3c18b7b17"
-  integrity sha512-xQ/dCxrjfxM0XY70wSIzakkTZ6ghERwlLmAPyCnu8Sk5cyt9YvOVyOsFNOa/BZ/lM63Q3i2YSSvp/o7GXZGsbg==
-  dependencies:
-    jquery ">=1.7"
-
 debug@^3.2.7:
   version "3.2.7"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.2.7.tgz#72580b7e9145fb39b6676f9c5e5fb100b934179a"
@@ -3170,7 +3138,7 @@ jquery-confirm@^3.3.4:
   dependencies:
     jquery ">=1.6"
 
-jquery@>=1.6, jquery@>=1.7:
+jquery@>=1.6:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-4.0.0.tgz#95c33ac29005ff72ec444c5ba1cf457e61404fbb"
   integrity sha512-TXCHVR3Lb6TZdtw1l3RTLf8RBWVGexdxL6AC8/e0xZKEpBflBsjh9/8LXw+dkNFuOyW9B7iB3O1sP7hS0Kiacg==
