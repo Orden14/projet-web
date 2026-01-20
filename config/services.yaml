@@ -1,5 +1,6 @@
 parameters:
     logo_directory: '%kernel.project_dir%/public/logo'
+    uploads_directory: '%kernel.project_dir%/public/uploads'
     default_profile_picture: '%kernel.project_dir%/assets/images/default_profile_picture.jpg'
     profile_picture_directory: '%kernel.project_dir%/public/profile_picture'
     timezone: '%env(APP_TIMEZONE)%'
