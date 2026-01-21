@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Entity\Folder;
 use App\Entity\Tag;
 use App\Entity\User;
+use App\Enum\RessourceTypeEnum;
 use DateTimeInterface;
 use Doctrine\Common\Collections\Collection;
 
@@ -54,5 +55,5 @@ interface RessourceInterface
 
     public function setFavorite(bool $favorite): static;
 
-    public function getType(): string;
+    public function getType(): RessourceTypeEnum;
 }

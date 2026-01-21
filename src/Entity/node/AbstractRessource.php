@@ -98,13 +98,13 @@ abstract class AbstractRessource extends AbstractUserOwnedEntity implements Ress
     /**
      * @throws LogicException
      */
-    final public function getType(): string
+    final public function getType(): RessourceTypeEnum
     {
         return match (true) {
-            $this instanceof Folder => RessourceTypeEnum::FOLDER->value,
-            $this instanceof File => RessourceTypeEnum::FILE->value,
-            $this instanceof Note => RessourceTypeEnum::NOTE->value,
-            $this instanceof Url => RessourceTypeEnum::URL->value,
+            $this instanceof Folder => RessourceTypeEnum::FOLDER,
+            $this instanceof File => RessourceTypeEnum::FILE,
+            $this instanceof Note => RessourceTypeEnum::NOTE,
+            $this instanceof Url => RessourceTypeEnum::URL,
             default => throw new LogicException('Unknown ressource type.'),
         };
     }
