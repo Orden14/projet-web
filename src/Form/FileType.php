@@ -15,6 +15,7 @@ final class FileType extends AbstractType
             ->add('uploadFile', \Symfony\Component\Form\Extension\Core\Type\FileType::class, [
                 'label' => 'Fichier',
                 'mapped' => false,
+                'required' => false,
             ])
             ->add('ressource', RessourceType::class)
         ;

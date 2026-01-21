@@ -17,7 +17,6 @@ Encore.setOutputPath("public/build/")
         config.useBuiltIns = "usage";
         config.corejs = "3.38";
     })
-    .enableSassLoader()
-    .enablePostCssLoader();
+    .enableSassLoader();
 
 module.exports = Encore.getWebpackConfig();
