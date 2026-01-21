@@ -5,7 +5,7 @@ namespace App\Factory;
 use App\Entity\Contact;
 use App\Simple\UserOwnedEntityData;
 
-final class ContactFactory extends AbstractFactory
+final class ContactEntityFactory extends AbstractEntityFactory
 {
     public function build(UserOwnedEntityData $userOwnedEntityData, string $contactName, string $contactNumber, string $contactEmail): void
     {

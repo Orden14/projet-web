@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Factory\UserFactory;
+use App\Factory\UserEntityFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -17,7 +17,7 @@ final class UserFixtures extends Fixture
 
     public function __construct(
         private readonly KernelInterface $kernel,
-        private readonly UserFactory $userFactory,
+        private readonly UserEntityFactory $userFactory,
         private readonly ParameterBagInterface $parameterBag,
     ) {
         $this->faker = Factory::create();

@@ -8,7 +8,7 @@ use App\Service\User\UserProfileService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-final class UserFactory extends AbstractFactory
+final class UserEntityFactory extends AbstractEntityFactory
 {
     public function __construct(
         private readonly UserProfileService $userProfileService,

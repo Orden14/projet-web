@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 use App\DataFixtures\util\UserOwnedEntityDataGenerator;
 use App\Entity\Contact;
 use App\Entity\User;
-use App\Factory\ContactFactory;
+use App\Factory\ContactEntityFactory;
 use App\Repository\UserRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -18,8 +18,8 @@ final class ContactFixtures extends Fixture implements DependentFixtureInterface
     private Generator $faker;
 
     public function __construct(
-        private readonly ContactFactory $contactFactory,
         private readonly UserRepository $userRepository,
+        private readonly ContactEntityFactory $contactFactory,
         private readonly UserOwnedEntityDataGenerator $userOwnedEntityDataGenerator,
     ) {
         $this->faker = Factory::create();
