@@ -11,7 +11,9 @@ final class FolderType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('ressource', RessourceType::class);
+        $builder->add('ressource', RessourceType::class, [
+            'data' => $builder->getData(),
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

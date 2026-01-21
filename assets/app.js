@@ -3,4 +3,4 @@ import "./styles/global.scss";
 
 import "bootstrap-select/dist/js/bootstrap-select.js";
 
-import "./javascript/extensions/jquery";
+import "jquery-confirm/dist/jquery-confirm.min";

@@ -15,12 +15,16 @@ final readonly class RessourceFormFactory
     ) {
     }
 
-    public function build(RessourceInterface $ressource): FormInterface
+    public function build(RessourceInterface $ressource, bool $isEditForm = false): FormInterface
     {
         $ressourceType = $ressource->getType();
 
+        $routeParameters = $isEditForm
+            ? ['id' => $ressource->getId()]
+            : ['type' => $ressourceType->value];
+
         return $this->formFactory->create($ressourceType->getCorrespondingFormTypeClass(), $ressource, [
-            'action' => $this->router->generate('ressource_create', ['type' => $ressourceType->value]),
+            'action' => $this->router->generate($isEditForm ? 'ressource_edit' : 'ressource_create', $routeParameters),
             'method' => 'POST',
         ]);
     }

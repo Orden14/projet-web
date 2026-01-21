@@ -81,7 +81,7 @@ final class RessourceController extends AbstractController
     {
         $ressource = $this->ressourceRepository->find($id);
 
-        $form = $this->ressourceFormsFactory->build($ressource);
+        $form = $this->ressourceFormsFactory->build($ressource, true);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

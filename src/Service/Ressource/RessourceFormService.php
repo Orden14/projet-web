@@ -3,7 +3,6 @@
 namespace App\Service\Ressource;
 
 use App\Entity\File;
-use App\Entity\Tag;
 use App\Entity\User;
 use App\Enum\RessourceTypeEnum;
 use App\Interface\RessourceInterface;
@@ -32,8 +31,6 @@ final readonly class RessourceFormService
 
         $ressource->setOwner($currentUser);
 
-        $this->manageTagAssignment($ressource, $form);
-
         if ($ressource instanceof File) {
             $this->manageFileUpload($ressource, $form);
         }
@@ -51,8 +48,6 @@ final readonly class RessourceFormService
             throw new LogicException("Vous n'avez pas la permission d'éditer cette ressource.");
         }
 
-        $this->manageTagAssignment($ressource, $form);
-
         if ($ressource instanceof File) {
             $this->manageFileUpload($ressource, $form);
         }
@@ -68,22 +63,6 @@ final readonly class RessourceFormService
             RessourceTypeEnum::URL => 'ressource/form/_url_form.html.twig',
             RessourceTypeEnum::NOTE => 'ressource/form/_note_form.html.twig',
         };
-    }
-
-    private function manageTagAssignment(RessourceInterface $ressource, FormInterface $form): void
-    {
-        /** @var Tag[] $selectedTags */
-        $selectedTags = $form->get('ressource')->get('tags')->getData();
-
-        foreach ($selectedTags as $selectedTag) {
-            $ressource->addTag($selectedTag);
-        }
-
-        foreach ($ressource->getTags() as $tag) {
-            if (!in_array($tag, $selectedTags, true)) {
-                $ressource->removeTag($tag);
-            }
-        }
     }
 
     private function manageFileUpload(File $file, FormInterface $form): void

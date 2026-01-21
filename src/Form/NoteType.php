@@ -16,7 +16,9 @@ final class NoteType extends AbstractType
             ->add('content', TextareaType::class, [
                 'label' => 'Note',
             ])
-            ->add('ressource', RessourceType::class)
+            ->add('ressource', RessourceType::class, [
+                'data' => $builder->getData(),
+            ])
         ;
     }
 

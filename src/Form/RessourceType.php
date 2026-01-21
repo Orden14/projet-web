@@ -70,11 +70,11 @@ final class RessourceType extends AbstractType
             ->add('tags', EntityType::class, [
                 'label' => 'Tags',
                 'class' => Tag::class,
+                'by_reference' => false,
                 'choices' => $this->tagRepository->findByUser($currentUser),
                 'choice_label' => 'title',
                 'multiple' => true,
                 'required' => false,
-                'mapped' => false,
             ])
             ->add('favorite', CheckboxType::class, [
                 'label' => 'Favori',

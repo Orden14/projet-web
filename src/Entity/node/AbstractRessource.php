@@ -64,6 +64,19 @@ abstract class AbstractRessource extends AbstractUserOwnedEntity implements Ress
         return $this->tags;
     }
 
+    final public function setTags(Collection $tags): static
+    {
+        foreach ($this->tags as $tag) {
+            $this->removeTag($tag);
+        }
+
+        foreach ($tags as $tag) {
+            $this->addTag($tag);
+        }
+
+        return $this;
+    }
+
     final public function addTag(Tag $tag): static
     {
         if (!$this->tags->contains($tag)) {

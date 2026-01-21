@@ -17,7 +17,9 @@ final class FileType extends AbstractType
                 'mapped' => false,
                 'required' => false,
             ])
-            ->add('ressource', RessourceType::class)
+            ->add('ressource', RessourceType::class, [
+                'data' => $builder->getData(),
+            ])
         ;
     }
 
