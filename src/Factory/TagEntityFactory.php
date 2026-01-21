@@ -5,7 +5,7 @@ namespace App\Factory;
 use App\Entity\Tag;
 use App\Entity\User;
 
-final class TagFactory extends AbstractFactory
+final class TagEntityFactory extends AbstractEntityFactory
 {
     public function build(string $title, string $color, User $owner): void
     {

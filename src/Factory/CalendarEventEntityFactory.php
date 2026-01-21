@@ -6,7 +6,7 @@ use App\Entity\CalendarEvent;
 use App\Simple\UserOwnedEntityData;
 use DateTime;
 
-final class CalendarEventFactory extends AbstractFactory
+final class CalendarEventEntityFactory extends AbstractEntityFactory
 {
     public function build(UserOwnedEntityData $userOwnedEntityData, DateTime $startDate, DateTime $endDate): void
     {

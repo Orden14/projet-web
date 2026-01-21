@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 use App\DataFixtures\util\UserOwnedEntityDataGenerator;
 use App\Entity\CalendarEvent;
 use App\Entity\User;
-use App\Factory\CalendarEventFactory;
+use App\Factory\CalendarEventEntityFactory;
 use App\Repository\UserRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -19,7 +19,7 @@ final class CalendarEventFixtures extends Fixture implements DependentFixtureInt
 
     public function __construct(
         private readonly UserRepository $userRepository,
-        private readonly CalendarEventFactory $calendarEventFactory,
+        private readonly CalendarEventEntityFactory $calendarEventFactory,
         private readonly UserOwnedEntityDataGenerator $userOwnedEntityDataGenerator,
     ) {
         $this->faker = Factory::create();

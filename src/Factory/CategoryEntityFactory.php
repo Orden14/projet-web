@@ -5,7 +5,7 @@ namespace App\Factory;
 use App\Entity\Category;
 use App\Entity\User;
 
-final class CategoryFactory extends AbstractFactory
+final class CategoryEntityFactory extends AbstractEntityFactory
 {
     public function build(string $name, User $owner): void
     {
