@@ -24,8 +24,8 @@ abstract class AbstractUserOwnedEntity
     #[ORM\Column(type: 'string', length: 255)]
     private string $title;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private string $description;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $description;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private DateTimeInterface $creationDate;
@@ -71,12 +71,12 @@ abstract class AbstractUserOwnedEntity
         return $this;
     }
 
-    final public function getDescription(): string
+    final public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    final public function setDescription(string $description): static
+    final public function setDescription(?string $description): static
     {
         $this->description = $description;
 

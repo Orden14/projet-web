@@ -11,6 +11,8 @@ use Doctrine\Common\Collections\Collection;
 
 interface RessourceInterface
 {
+    public function getId(): ?int;
+
     public function getOwner(): User;
 
     public function setOwner(User $owner): static;
@@ -19,7 +21,7 @@ interface RessourceInterface
 
     public function setTitle(string $title): static;
 
-    public function getDescription(): string;
+    public function getDescription(): ?string;
 
     public function setDescription(string $description): static;
 
@@ -51,4 +53,6 @@ interface RessourceInterface
     public function isFavorite(): bool;
 
     public function setFavorite(bool $favorite): static;
+
+    public function getType(): string;
 }

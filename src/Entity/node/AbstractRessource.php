@@ -7,19 +7,21 @@ use App\Entity\Folder;
 use App\Entity\Note;
 use App\Entity\Tag;
 use App\Entity\Url;
+use App\Enum\RessourceTypeEnum;
 use App\Interface\RessourceInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use LogicException;
 
 #[ORM\Entity]
 #[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\DiscriminatorColumn(name: 'type', type: 'string')]
 #[ORM\DiscriminatorMap([
-    'folder' => Folder::class,
-    'file' => File::class,
-    'note' => Note::class,
-    'url' => Url::class,
+    RessourceTypeEnum::FOLDER->value => Folder::class,
+    RessourceTypeEnum::FILE->value => File::class,
+    RessourceTypeEnum::NOTE->value => Note::class,
+    RessourceTypeEnum::URL->value => Url::class,
 ])]
 abstract class AbstractRessource extends AbstractUserOwnedEntity implements RessourceInterface
 {
@@ -91,5 +93,19 @@ abstract class AbstractRessource extends AbstractUserOwnedEntity implements Ress
         $this->favorite = $favorite;
 
         return $this;
+    }
+
+    /**
+     * @throws LogicException
+     */
+    final public function getType(): string
+    {
+        return match (true) {
+            $this instanceof Folder => RessourceTypeEnum::FOLDER->value,
+            $this instanceof File => RessourceTypeEnum::FILE->value,
+            $this instanceof Note => RessourceTypeEnum::NOTE->value,
+            $this instanceof Url => RessourceTypeEnum::URL->value,
+            default => throw new LogicException('Unknown ressource type.'),
+        };
     }
 }
