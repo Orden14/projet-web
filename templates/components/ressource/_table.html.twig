@@ -18,7 +18,12 @@
 			data-type="{{ ressource.getType().value }}"
 			data-category="{{ ressource.category.name }}"
 			data-date="{{ date }}">
-			<td>{{ ressource.title }}</td>
+			<td>
+				{{ ressource.title }}
+				{% for tag in ressource.tags %}
+					<span class="tag" style="background-color: {{ tag.color }}">{{ tag.title }}</span>
+				{% endfor %}
+			</td>
 			<td>{{ ressource.type.value }}</td>
 			<td>{{ ressource.category.name }}</td>
 			<td>{{ date }}</td>
