@@ -7,10 +7,10 @@
 
 {% block body %}
 	<h2>Mes contacts</h2>
-	<div class="ressources-section" data-controller="filter drag-and-drop" data-action="dragenter->drag-and-drop#onDragEnter dragover->drag-and-drop#onDragOver dragleave->drag-and-drop#onDragLeave drop->drag-and-drop#onDrop">
+	<div class="ressources-section" data-controller="contact-filter">
 		<div class="ressources-header">
 			<div class="search-container">
-				<input type="text" class="search-bar" placeholder="Recherche par nom" data-filter-target="source" data-action="input->filter#filter">
+				<input type="text" class="search-bar" placeholder="Recherche par nom, téléphone ou email" data-contact-filter-target="source" data-action="input->contact-filter#filter">
 			</div>
 			<button class="add-button">
 				<i class="bi bi-plus"></i>
@@ -21,7 +21,6 @@
 			<div class="section-header">
 				<h3>Mes contacts</h3>
 			</div>
-			{{ include('components/ressources/_filter.html.twig') }}
 		</div>
 
 		<div class="files-table">
