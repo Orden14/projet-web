@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes ressources{% endblock %}
+
+{% block body %}
+    <div class="example-wrapper">
+        <h1>Hello !</h1>
+        {% for folder in folders %}
+            <p>{{ folder.id }}</p>
+        {% endfor %}
+        {% for ressource in ressources %}
+            <p>{{ ressource.id }}</p>
+        {% endfor %}
+    </div>
+{% endblock %}

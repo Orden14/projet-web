@@ -29,4 +29,32 @@ final class FolderRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * @return Folder[]
+     */
+    public function findInsideFolderByUser(User $user, ?Folder $parent = null): array
+    {
+        $queryBuilder = $this->createQueryBuilder('f')
+            ->andWhere('f.owner = :user')
+            ->setParameter('user', $user)
+        ;
+
+        if ($parent) {
+            $queryBuilder
+                ->andWhere('f.parent = :parent')
+                ->setParameter('parent', $parent)
+            ;
+        } else {
+            $queryBuilder
+                ->andWhere('f.parent IS NULL')
+            ;
+        }
+
+        return $queryBuilder
+            ->orderBy('f.title', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
