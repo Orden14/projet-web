@@ -1,0 +1,9 @@
+<header class="top-header">
+    <div class="header-content">
+        {% if app.user %}
+            <div class="user-profile">
+                {% include 'components/navbar/links/_profile.html.twig' %}
+            </div>
+        {% endif %}
+    </div>
+</header>

@@ -1,7 +1,6 @@
 import { startStimulusApp } from "@symfony/stimulus-bridge";
 
 import $ from "jquery";
-
 global.$ = $;
 global.jQuery = $;
 global.bootstrap = require("bootstrap/dist/js/bootstrap.bundle.js");

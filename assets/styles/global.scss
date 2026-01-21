@@ -1,12 +1,9 @@
-// App
 @use "navbar" as *;
+@use "ressources" as *;
 @use "form" as *;
 
-// Bootstrap
 @import "bootstrap/scss/bootstrap.scss";
 @import "bootstrap-select/sass/bootstrap-select.scss";
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
-// jQuery-confirm
 @import "jquery-confirm/css/jquery-confirm.css";
-

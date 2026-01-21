@@ -1,0 +1,61 @@
+<table id="ressourcesTable" class="table table-hover">
+	<thead>
+		<tr>
+			<th>Nom</th>
+			<th>Type</th>
+			<th>Catégorie</th>
+			<th>Dernière modification</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr data-filter-target="row">
+			<td>Document 1</td>
+			<td>Document</td>
+			<td>Rapport</td>
+			<td>2026-01-15</td>
+			<td class="text-end position-relative" data-controller="row-menu">
+				<button class="btn btn-sm" type="button" data-action="click->row-menu#toggle">
+					<i class="bi bi-three-dots-vertical"></i>
+				</button>
+				<div class="filter-menu row-menu" data-row-menu-target="menu">
+					<button type="button" class="row-menu-item">Modifier</button>
+					<button type="button" class="row-menu-item">Supprimer</button>
+					<button type="button" class="row-menu-item">Télécharger</button>
+				</div>
+			</td>
+		</tr>
+		<tr data-filter-target="row">
+			<td>Présentation 2</td>
+			<td>Document</td>
+			<td>Rapport</td>
+			<td>2026-01-18</td>
+			<td class="text-end position-relative" data-controller="row-menu">
+				<button class="btn btn-sm" type="button" data-action="click->row-menu#toggle">
+					<i class="bi bi-three-dots-vertical"></i>
+				</button>
+				<div class="filter-menu row-menu" data-row-menu-target="menu">
+					<button type="button" class="row-menu-item">Modifier</button>
+					<button type="button" class="row-menu-item">Supprimer</button>
+					<button type="button" class="row-menu-item">Télécharger</button>
+				</div>
+			</td>
+		</tr>
+		<tr data-filter-target="row">
+			<td>Feuille de calcul 3</td>
+			<td>Lien</td>
+			<td>Rapport</td>
+			<td>2026-01-20</td>
+			<td class="text-end position-relative" data-controller="row-menu">
+				<button class="btn btn-sm" type="button" data-action="click->row-menu#toggle">
+					<i class="bi bi-three-dots-vertical"></i>
+				</button>
+				<div class="filter-menu row-menu" data-row-menu-target="menu">
+					<button type="button" class="row-menu-item">Modifier</button>
+					<button type="button" class="row-menu-item">Supprimer</button>
+					{# Pas de téléchargement pour les liens #}
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table></div>
