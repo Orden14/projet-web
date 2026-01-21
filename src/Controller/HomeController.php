@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Enum\RolesEnum;
+use App\Repository\ContactRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -18,8 +19,12 @@ final class HomeController extends AbstractController
     }
 
     #[Route('/contact', name: 'app_contact', methods: ['GET'])]
-    public function contact(): Response
+    public function contact(ContactRepository $contactRepository): Response
     {
-        return $this->render('contact/contact.html.twig');
+        $contacts = $contactRepository->findByUser($this->getUser());
+
+        return $this->render('contact/contact.html.twig', [
+            'contacts' => $contacts,
+        ]);
     }
 }

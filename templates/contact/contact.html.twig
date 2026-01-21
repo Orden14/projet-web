@@ -7,10 +7,10 @@
 
 {% block body %}
 	<h2>Mes contacts</h2>
-	<div class="ressources-section" data-controller="contact-filter">
+	<div class="ressources-section" data-controller="contact--contact-filter">
 		<div class="ressources-header">
 			<div class="search-container">
-				<input type="text" class="search-bar" placeholder="Recherche par nom, téléphone ou email" data-contact-filter-target="source" data-action="input->contact-filter#filter">
+				<input type="text" class="search-bar" placeholder="Recherche par nom, téléphone ou email" data-action="input->contact--contact-filter#filter">
 			</div>
 			<button class="add-button">
 				<i class="bi bi-plus"></i>
@@ -24,7 +24,7 @@
 		</div>
 
 		<div class="files-table">
-			{{ include('components/contact/_table.html.twig') }}
+			{{ include('components/contact/_table.html.twig', { contacts: contacts }) }}
 		</div>
 	</div>
 {% endblock %}

@@ -1,23 +1,18 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-    static targets = ["source", "row"];
+    static targets = ["row"];
 
     filter(event) {
-        const searchValue = event.target.value.toLowerCase();
+        const query = event.target.value.trim().toLowerCase();
 
         this.rowTargets.forEach((row) => {
-            const nameCell = row.cells[0].textContent.toLowerCase();
-            const phoneCell = row.cells[1].textContent.toLowerCase();
-            const emailCell = row.cells[2].textContent.toLowerCase();
+            const name = row.dataset.name?.toLowerCase() ?? "";
+            const phone = row.dataset.phone?.toLowerCase() ?? "";
+            const email = row.dataset.email?.toLowerCase() ?? "";
 
-            const matches = nameCell.includes(searchValue) || phoneCell.includes(searchValue) || emailCell.includes(searchValue);
-
-            if (matches) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
+            const matches = !query || [name, phone, email].some((text) => text.includes(query));
+            row.style.display = matches ? "" : "none";
         });
     }
 }
