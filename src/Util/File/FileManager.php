@@ -13,7 +13,13 @@ final readonly class FileManager
      */
     public function uploadFile(File $file, string $directory): string
     {
-        $fileName = uniqid('file', true) . '.' . $file->guessExtension();
+        $extension = $file->guessExtension();
+
+        if ($extension === null && method_exists($file, 'getClientOriginalExtension')) {
+            $extension = $file->getClientOriginalExtension() ?: 'bin';
+        }
+
+        $fileName = uniqid('file', true) . '.' . $extension;
 
         try {
             $file->move(
@@ -21,7 +27,7 @@ final readonly class FileManager
                 $fileName
             );
         } catch (FileException $e) {
-            throw new FileException('An error occurred while uploading the file', $e->getCode());
+            throw new FileException($e->getMessage(), $e->getCode());
         }
 
         return $fileName;

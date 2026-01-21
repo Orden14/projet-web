@@ -1,0 +1,56 @@
+{{ form_start(file_form) }}
+<div class="mb-3">
+    {{ form_label(file_form.ressource.title) }}
+    {{ form_widget(file_form.ressource.title, { attr: { class: 'form-control', placeholder: 'Titre' } }) }}
+    {{ form_errors(file_form.ressource.title) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(file_form.uploadFile) }}
+    {{ form_widget(file_form.uploadFile, { attr: { class: 'form-control' } }) }}
+    {{ form_errors(file_form.uploadFile) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(file_form.ressource.description) }}
+    {{ form_widget(file_form.ressource.description, { attr: { class: 'form-control', rows:3 } }) }}
+    {{ form_errors(file_form.ressource.description) }}
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        {{ form_label(file_form.ressource.parent) }}
+        {{ form_widget(file_form.ressource.parent, { attr: { class: 'form-select' } }) }}
+        {{ form_errors(file_form.ressource.parent) }}
+    </div>
+    <div class="col-md-6 mb-3">
+        {{ form_label(file_form.ressource.category) }}
+        {{ form_widget(file_form.ressource.category, { attr: { class: 'form-select' } }) }}
+        {{ form_errors(file_form.ressource.category) }}
+    </div>
+</div>
+
+<div class="mb-3">
+    {{ form_label(file_form.ressource.tags) }}
+    {{ form_widget(file_form.ressource.tags, {
+        attr: {
+            class: 'selectpicker',
+            'data-style-base': 'form-control',
+            'data-width': '100%',
+            'data-container': 'body',
+            multiple: 'multiple'
+        }
+    }) }}
+    {{ form_errors(file_form.ressource.tags) }}
+</div>
+
+<div class="form-check mb-3">
+    {{ form_widget(file_form.ressource.favorite, { attr: { class: 'form-check-input' } }) }}
+    {{ form_label(file_form.ressource.favorite, null, { label_attr: { class: 'form-check-label' } }) }}
+    {{ form_errors(file_form.ressource.favorite) }}
+</div>
+
+<div class="d-grid">
+    <button type="submit" class="btn btn-primary">Enregistrer </button>
+</div>
+{{ form_end(file_form) }}

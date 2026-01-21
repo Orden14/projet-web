@@ -35,7 +35,7 @@ final class UrlFixtures extends Fixture implements DependentFixtureInterface
             $tags = $this->tagRepository->findByUser($user);
             $categories = $this->categoryRepository->findByUser($user);
 
-            for ($i = 0; $i < 4; $i++) {
+            for ($i = 0; $i < 8; $i++) {
                 $rand = $this->faker->numberBetween(0, 1);
                 $file = (new Url())
                     ->setOwner($user)
