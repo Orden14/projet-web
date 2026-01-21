@@ -25,7 +25,18 @@
 
 		<div class="folders-section mb-4">
 			<div class="section-header">
-				<h3>{{ current_folder.title ?? 'Mes dossiers' }}</h3>
+				{% if current_folder %}
+					<h3>
+						<a href="{{ path('ressource_index') }}">Mes dossiers</a>
+						<span class="text-muted">›</span>
+						{% for crumb in breadcrumb %}
+							{% if not loop.first %}<span class="text-muted">›</span>{% endif %}
+							<a href="{{ path('ressource_index', {'id': crumb.id}) }}">{{ crumb.title }}</a>
+						{% endfor %}
+					</h3>
+				{% else %}
+					<h3>Mes dossiers</h3>
+				{% endif %}
 			</div>
 			<div class="folders-container">
 				{% for folder in folders %}

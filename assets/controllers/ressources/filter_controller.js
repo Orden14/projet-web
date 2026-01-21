@@ -3,11 +3,21 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
     static targets = ["source", "row"];
 
+    connect() {
+        this.handleFavoriteToggled = () => this.applyAllFilters();
+        window.addEventListener("favorite:toggled", this.handleFavoriteToggled);
+    }
+
+    disconnect() {
+        window.removeEventListener("favorite:toggled", this.handleFavoriteToggled);
+    }
+
     filters = {
         search: "",
         type: null,
         category: null,
         date: null,
+        favorite: false,
     };
 
     filter(event) {
@@ -63,6 +73,29 @@ export default class extends Controller {
         this.applyAllFilters();
     }
 
+    filterByFavorite(event) {
+        event.preventDefault();
+        this.filters.favorite = !this.filters.favorite;
+        this.setFavoritesButtonStyle();
+        this.setClearButtonVisibility("favorite", this.filters.favorite);
+        this.applyAllFilters();
+    }
+
+    clearFavoriteFilter(event) {
+        event.preventDefault();
+        this.filters.favorite = false;
+        this.setFavoritesButtonStyle();
+        this.setClearButtonVisibility("favorite", false);
+        this.applyAllFilters();
+    }
+
+    setFavoritesButtonStyle() {
+        const button = this.element.querySelector(`.filter-pill[data-filter-group="favorite"]`);
+        if (button) {
+            button.style.backgroundColor = this.filters.favorite ? "#cae3fb" : "";
+        }
+    }
+
     resetFilterButtonLabel(group, defaultLabel) {
         const button = this.element.querySelector(`.filter-pill[data-filter-group="${group}"]`);
         if (button) {
@@ -83,13 +116,15 @@ export default class extends Controller {
             const type = row.dataset.type;
             const category = row.dataset.category;
             const date = row.dataset.date;
+            const favorite = row.dataset.favorite === "true";
 
             const matchSearch = name.includes(this.filters.search);
             const matchType = !this.filters.type || type === this.filters.type;
             const matchCategory = !this.filters.category || category === this.filters.category;
             const matchDate = !this.filters.date || this.matchDate(date, this.filters.date);
+            const matchFavorite = !this.filters.favorite || favorite;
 
-            if (matchSearch && matchType && matchCategory && matchDate) {
+            if (matchSearch && matchType && matchCategory && matchDate && matchFavorite) {
                 row.style.display = "";
             } else {
                 row.style.display = "none";
