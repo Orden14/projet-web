@@ -34,7 +34,6 @@ final class FolderController extends AbstractController
 
             $this->entityManager->persist($folder);
             $this->entityManager->flush();
-
         }
 
         return $this->redirectToRoute('ressource_index', ['id' => $folder->getParent()?->getId()]);

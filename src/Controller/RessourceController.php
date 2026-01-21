@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\File;
 use App\Entity\Folder;
 use App\Entity\node\AbstractRessource;
+use App\Entity\Note;
+use App\Entity\Url;
 use App\Entity\User;
 use App\Enum\RolesEnum;
 use App\Form\FileType;
@@ -36,27 +39,25 @@ final class RessourceController extends AbstractController
         /** @var User $currentUser */
         $currentUser = $this->getUser();
 
-        $folderForm = $this->createForm(FolderType::class, [
+        $folderForm = $this->createForm(FolderType::class, new Folder(), [
             'action' => $this->generateUrl('folder_create'),
             'method' => 'POST',
         ]);
 
-        $urlForm = $this->createForm(UrlType::class, [
+        $urlForm = $this->createForm(UrlType::class, new Url(), [
             'action' => $this->generateUrl('url_create'),
             'method' => 'POST',
         ]);
 
-        $fileForm = $this->createForm(FileType::class, [
+        $fileForm = $this->createForm(FileType::class, new File(), [
             'action' => $this->generateUrl('file_create'),
             'method' => 'POST',
         ]);
 
-        $noteForm = $this->createForm(NoteType::class, [
+        $noteForm = $this->createForm(NoteType::class, new Note(), [
             'action' => $this->generateUrl('note_create'),
             'method' => 'POST',
         ]);
-
-        $folderForm->handleRequest($request);
 
         if ($folder && $folder->getOwner() !== $currentUser) {
             throw $this->createAccessDeniedException("Vous n'avez pas accès à ce dossier.");
@@ -68,6 +69,7 @@ final class RessourceController extends AbstractController
             'folder_form' => $folderForm->createView(),
             'url_form' => $urlForm->createView(),
             'file_form' => $fileForm->createView(),
+            'note_form' => $noteForm->createView(),
         ]);
     }
 

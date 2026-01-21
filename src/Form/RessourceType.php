@@ -2,15 +2,17 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Folder;
+use App\Entity\Tag;
 use App\Entity\User;
 use App\Repository\CategoryRepository;
 use App\Repository\FolderRepository;
 use App\Repository\TagRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -41,13 +43,13 @@ final class RessourceType extends AbstractType
                 'label' => 'Description',
                 'required' => false,
             ])
-            ->add('parent', ChoiceType::class, [
+            ->add('parent', EntityType::class, [
                 'label' => 'Dossier',
-                'choices' => [
-                    'Aucun' => null,
-                    ...$this->folderRepository->findByUser($currentUser),
-                ],
-                'required' => true,
+                'class' => Folder::class,
+                'placeholder' => 'Aucun',
+                'choices' => $this->folderRepository->findByUser($currentUser),
+                'choice_label' => 'title',
+                'required' => false,
                 'constraints' => [
                     new Callback(static function (?Folder $parent, ExecutionContextInterface $context) use ($currentUser): void {
                         if ($parent !== null && $parent->getOwner() !== $currentUser) {
@@ -59,15 +61,20 @@ final class RessourceType extends AbstractType
                     }),
                 ],
             ])
-            ->add('category', ChoiceType::class, [
+            ->add('category', EntityType::class, [
                 'label' => 'Catégorie',
+                'class' => Category::class,
                 'choices' => $this->categoryRepository->findByUser($currentUser),
+                'choice_label' => 'name',
             ])
-            ->add('tags', ChoiceType::class, [
+            ->add('tags', EntityType::class, [
                 'label' => 'Tags',
+                'class' => Tag::class,
                 'choices' => $this->tagRepository->findByUser($currentUser),
+                'choice_label' => 'title',
                 'multiple' => true,
                 'required' => false,
+                'mapped' => false,
             ])
             ->add('favorite', CheckboxType::class, [
                 'label' => 'Favori',

@@ -16,7 +16,7 @@ final class UrlType extends AbstractType
             ->add('url', TextType::class, [
                 'label' => 'URL',
             ])
-            ->add('Url', RessourceType::class)
+            ->add('ressource', RessourceType::class)
         ;
     }
 

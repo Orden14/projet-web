@@ -16,7 +16,7 @@ final class FileType extends AbstractType
                 'label' => 'Fichier',
                 'mapped' => false,
             ])
-            ->add('Url', RessourceType::class)
+            ->add('ressource', RessourceType::class)
         ;
     }
 

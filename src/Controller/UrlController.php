@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Tag;
 use App\Entity\Url;
 use App\Entity\User;
 use App\Form\UrlType;
@@ -31,6 +32,13 @@ final class UrlController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $url->setOwner($currentUser);
+
+            /** @var Tag[] $tags */
+            $tags = $form->get('ressource')->get('tags')->getData();
+
+            foreach ($tags as $tag) {
+                $url->addTag($tag);
+            }
 
             $this->entityManager->persist($url);
             $this->entityManager->flush();

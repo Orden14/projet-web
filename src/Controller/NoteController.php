@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Note;
+use App\Entity\Tag;
 use App\Entity\User;
 use App\Form\NoteType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,6 +32,13 @@ final class NoteController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $note->setOwner($currentUser);
+
+            /** @var Tag[] $tags */
+            $tags = $form->get('ressource')->get('tags')->getData();
+
+            foreach ($tags as $tag) {
+                $note->addTag($tag);
+            }
 
             $this->entityManager->persist($note);
             $this->entityManager->flush();

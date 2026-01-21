@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\File;
+use App\Entity\Tag;
 use App\Entity\User;
 use App\Form\FileType;
 use App\Util\File\FileManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -34,8 +36,17 @@ final class FileController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $file->setOwner($currentUser);
 
+            /** @var UploadedFile $uploadedFIle */
             $uploadedFIle = $form->get('uploadFile')->getData();
+
             $file->setFileName($this->fileManager->uploadFile($uploadedFIle, $this->getParameter('uploads_directory')));
+
+            /** @var Tag[] $tags */
+            $tags = $form->get('ressource')->get('tags')->getData();
+
+            foreach ($tags as $tag) {
+                $file->addTag($tag);
+            }
 
             $this->entityManager->persist($file);
             $this->entityManager->flush();
