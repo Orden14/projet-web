@@ -95,7 +95,7 @@ abstract class AbstractUserOwnedEntity
         return $this;
     }
 
-    final public function getUpdateDate(): DateTimeInterface
+    final public function getUpdateDate(): ?DateTimeInterface
     {
         return $this->updateDate;
     }

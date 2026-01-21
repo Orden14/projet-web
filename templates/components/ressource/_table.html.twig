@@ -11,7 +11,7 @@
 	<tbody>
 		{% for ressource in ressources %}
 
-		{% set date = ressource.creationDate|date('Y-m-d') %}
+		{% set date = ressource.getUpdateDate() ? ressource.getUpdateDate()|date('Y-m-d') : ressource.getCreationDate()|date('Y-m-d') %}
 
 		<tr data-ressources--filter-target="row"
 			data-name="{{ ressource.title }}"
