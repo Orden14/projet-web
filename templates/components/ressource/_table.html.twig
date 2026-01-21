@@ -1,0 +1,39 @@
+<table id="ressourcesTable" class="table table-hover">
+	<thead>
+		<tr>
+			<th>Nom</th>
+			<th>Type</th>
+			<th>Catégorie</th>
+			<th>Dernière modification</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for ressource in ressources %}
+
+		{% set date = ressource.creationDate|date('Y-m-d') %}
+
+		<tr data-ressources--filter-target="row"
+			data-name="{{ ressource.title }}"
+			data-type="{{ ressource.getType().value }}"
+			data-date="{{ date }}">
+			<td>{{ ressource.title }}</td>
+			<td>{{ ressource.type.value }}</td>
+			<td>{{ ressource.category.name }}</td>
+			<td>{{ date }}</td>
+			<td class="text-end position-relative" data-controller="row-menu">
+				<button class="btn btn-sm" type="button" data-action="click->row-menu#toggle">
+					<i class="bi bi-three-dots-vertical"></i>
+				</button>
+				<div class="filter-menu row-menu" data-row-menu-target="menu">
+					<button type="button" class="row-menu-item">Modifier</button>
+					<button type="button" class="row-menu-item">Supprimer</button>
+					{% if ressource.type.value == "file" %}
+						<button type="button" class="row-menu-item">Télécharger</button>
+					{% endif %}
+				</div>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table></div>
