@@ -9,11 +9,18 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr data-ressources--filter-target="row">
-			<td>Document 1</td>
-			<td>Document</td>
-			<td>Rapport</td>
-			<td>2026-01-15</td>
+		{% for ressource in ressources %}
+
+		{% set date = ressource.creationDate|date('Y-m-d') %}
+
+		<tr data-ressources--filter-target="row"
+			data-name="{{ ressource.title }}"
+			data-type="{{ ressource.getType().value }}"
+			data-date="{{ date }}">
+			<td>{{ ressource.title }}</td>
+			<td>{{ ressource.type.value }}</td>
+			<td>{{ ressource.category.name }}</td>
+			<td>{{ date }}</td>
 			<td class="text-end position-relative" data-controller="row-menu">
 				<button class="btn btn-sm" type="button" data-action="click->row-menu#toggle">
 					<i class="bi bi-three-dots-vertical"></i>
@@ -21,41 +28,12 @@
 				<div class="filter-menu row-menu" data-row-menu-target="menu">
 					<button type="button" class="row-menu-item">Modifier</button>
 					<button type="button" class="row-menu-item">Supprimer</button>
-					<button type="button" class="row-menu-item">Télécharger</button>
+					{% if ressource.type.value == "file" %}
+						<button type="button" class="row-menu-item">Télécharger</button>
+					{% endif %}
 				</div>
 			</td>
 		</tr>
-		<tr data-ressources--filter-target="row">
-			<td>Présentation 2</td>
-			<td>Document</td>
-			<td>Rapport</td>
-			<td>2026-01-18</td>
-			<td class="text-end position-relative" data-controller="row-menu">
-				<button class="btn btn-sm" type="button" data-action="click->row-menu#toggle">
-					<i class="bi bi-three-dots-vertical"></i>
-				</button>
-				<div class="filter-menu row-menu" data-row-menu-target="menu">
-					<button type="button" class="row-menu-item">Modifier</button>
-					<button type="button" class="row-menu-item">Supprimer</button>
-					<button type="button" class="row-menu-item">Télécharger</button>
-				</div>
-			</td>
-		</tr>
-		<tr data-ressources--filter-target="row">
-			<td>Feuille de calcul 3</td>
-			<td>Lien</td>
-			<td>Rapport</td>
-			<td>2026-01-20</td>
-			<td class="text-end position-relative" data-controller="row-menu">
-				<button class="btn btn-sm" type="button" data-action="click->row-menu#toggle">
-					<i class="bi bi-three-dots-vertical"></i>
-				</button>
-				<div class="filter-menu row-menu" data-row-menu-target="menu">
-					<button type="button" class="row-menu-item">Modifier</button>
-					<button type="button" class="row-menu-item">Supprimer</button>
-					{# Pas de téléchargement pour les liens #}
-				</div>
-			</td>
-		</tr>
+		{% endfor %}
 	</tbody>
 </table></div>
