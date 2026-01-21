@@ -26,8 +26,13 @@
 					<i class="bi bi-three-dots-vertical"></i>
 				</button>
 				<div class="filter-menu row-menu" data-row-menu-target="menu">
-					<a type="no-underline text-decoration-none" class="row-menu-item" href="{{ path('ressource_edit', { 'id': ressource.id }) }}">Modifier</a>
-					<button type="button" class="row-menu-item">Supprimer</button>
+					<a class="row-menu-item no-underline text-decoration-none" href="{{ path('ressource_edit', { 'id': ressource.id }) }}">Modifier</a>
+					<form id="delete{{ ressource.id }}" method="post" action="{{ path('ressource_delete', {'id': ressource.id}) }}" data-controller="confirm">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ressource.id) }}">
+						<a type="button" class="row-menu-item flex-shrink-0" id="{{ ressource.id }}" data-action="confirm#confirmDeletion" title="Supprimer" data-bs-toggle="tooltip">
+							Supprimer
+						</a>
+					</form>
 					{% if ressource.type.value == "file" %}
 						<button type="button" class="row-menu-item">Télécharger</button>
 					{% endif %}
