@@ -14,6 +14,23 @@ export default class extends Controller {
         const token = form.querySelector('input[name="_token"]').value;
         const button = event.currentTarget;
         const icon = button.querySelector("i");
+        const row = this.element.closest("tr");
+        const wasFavorite = icon.classList.contains("bi-star-fill");
+        const previousColor = icon.style.color;
+
+        if (wasFavorite) {
+            icon.classList.remove("bi-star-fill");
+            icon.classList.add("bi-star");
+            icon.style.color = "grey";
+            if (row) row.dataset.favorite = "false";
+        } else {
+            icon.classList.remove("bi-star");
+            icon.classList.add("bi-star-fill");
+            icon.style.color = "gold";
+            if (row) row.dataset.favorite = "true";
+        }
+
+        window.dispatchEvent(new CustomEvent("favorite:toggled"));
 
         try {
             const response = await fetch(url, {
@@ -25,25 +42,39 @@ export default class extends Controller {
                 body: `_token=${token}`,
             });
 
-            const data = await response.json();
-            const row = this.element.closest("tr");
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
 
-            if (data.favorite) {
+            const data = await response.json();
+            if (data.favorite !== !wasFavorite) {
+                if (wasFavorite) {
+                    icon.classList.remove("bi-star");
+                    icon.classList.add("bi-star-fill");
+                    icon.style.color = previousColor;
+                    if (row) row.dataset.favorite = "true";
+                } else {
+                    icon.classList.remove("bi-star-fill");
+                    icon.classList.add("bi-star");
+                    icon.style.color = previousColor;
+                    if (row) row.dataset.favorite = "false";
+                }
+                window.dispatchEvent(new CustomEvent("favorite:toggled"));
+            }
+        } catch (error) {
+            console.error("Error toggling favorite:", error);
+            if (wasFavorite) {
                 icon.classList.remove("bi-star");
                 icon.classList.add("bi-star-fill");
-                icon.style.color = "gold";
+                icon.style.color = previousColor;
                 if (row) row.dataset.favorite = "true";
             } else {
                 icon.classList.remove("bi-star-fill");
                 icon.classList.add("bi-star");
-                icon.style.color = "grey";
+                icon.style.color = previousColor;
                 if (row) row.dataset.favorite = "false";
             }
-
-            // Notify filters to re-apply if needed
             window.dispatchEvent(new CustomEvent("favorite:toggled"));
-        } catch (error) {
-            console.error("Error toggling favorite:", error);
         }
     }
 }
