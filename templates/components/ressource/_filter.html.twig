@@ -1,0 +1,45 @@
+<div class="filters">
+	<div class="filter" data-controller="ressources--filter-select-menu">
+		<button class="filter-pill" data-filter-group="type" data-action="click->ressources--filter-select-menu#toggle">Type
+			<i class="bi bi-chevron-down"></i>
+		</button>
+		<button class="filter-clear" type="button" hidden aria-label="Réinitialiser le filtre type" data-filter-group="type" data-action="click->ressources--filter#clearTypeFilter"><i class="bi bi-x"></i></button>
+		<div class="filter-menu" data-ressources--filter-select-menu-target="menu">
+			<button data-type="file" data-action="click->ressources--filter-select-menu#selectOption click->ressources--filter#filterByType">
+				<span class="ico">📄</span>
+				Fichier</button>
+			<button data-type="url" data-action="click->ressources--filter-select-menu#selectOption click->ressources--filter#filterByType">
+				<span class="ico">🔗</span>
+				Lien</button>
+			<button data-type="note" data-action="click->ressources--filter-select-menu#selectOption click->ressources--filter#filterByType">
+				<span class="ico">📝</span>
+				Note</button>
+		</div>
+	</div>
+
+	<div class="filter" data-controller="ressources--filter-select-menu">
+		<button class="filter-pill" data-filter-group="category" data-action="click->ressources--filter-select-menu#toggle">Catégorie
+			<i class="bi bi-chevron-down"></i>
+		</button>
+		<button class="filter-clear" type="button" hidden aria-label="Réinitialiser le filtre catégorie" data-filter-group="category" data-action="click->ressources--filter#clearCategoryFilter"><i class="bi bi-x"></i></button>
+		<div class="filter-menu" data-ressources--filter-select-menu-target="menu">
+			{% for category in categories %}
+			<button data-category="{{ category.name }}" data-action="click->ressources--filter-select-menu#selectOption click->ressources--filter#filterByCategory">{{ category.name }}</button>
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="filter" data-controller="ressources--filter-select-menu">
+		<button class="filter-pill" data-filter-group="date" data-action="click->ressources--filter-select-menu#toggle">Date de modification
+			<i class="bi bi-chevron-down"></i>
+		</button>
+		<button class="filter-clear" type="button" hidden aria-label="Réinitialiser le filtre date" data-filter-group="date" data-action="click->ressources--filter#clearDateFilter"><i class="bi bi-x"></i></button>
+		<div class="filter-menu" data-ressources--filter-select-menu-target="menu">
+			<button data-action="click->ressources--filter-select-menu#selectOption click->ressources--filter#filterByDate">Aujourd'hui</button>
+			<button data-action="click->ressources--filter-select-menu#selectOption click->ressources--filter#filterByDate">7 derniers jours</button>
+			<button data-action="click->ressources--filter-select-menu#selectOption click->ressources--filter#filterByDate">30 derniers jours</button>
+			<button data-action="click->ressources--filter-select-menu#selectOption click->ressources--filter#filterByDate">Cette année</button>
+			<button data-action="click->ressources--filter-select-menu#selectOption click->ressources--filter#filterByDate">Année dernière</button>
+		</div>
+	</div>
+</div>

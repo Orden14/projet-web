@@ -79,15 +79,15 @@ export default class extends Controller {
 
     applyAllFilters() {
         this.rowTargets.forEach((row) => {
-            const nameCell = row.cells[0].textContent.toLowerCase();
-            const typeCell = row.cells[1].textContent.trim();
-            const categoryCell = row.cells[2].textContent.trim();
-            const dateCell = row.cells[3].textContent.trim();
+            const name = row.dataset.name.toLowerCase();
+            const type = row.dataset.type;
+            const category = row.dataset.category;
+            const date = row.dataset.date;
 
-            const matchSearch = nameCell.includes(this.filters.search);
-            const matchType = !this.filters.type || typeCell.includes(this.filters.type);
-            const matchCategory = !this.filters.category || categoryCell.includes(this.filters.category);
-            const matchDate = !this.filters.date || this.matchDate(dateCell, this.filters.date);
+            const matchSearch = name.includes(this.filters.search);
+            const matchType = !this.filters.type || type === this.filters.type;
+            const matchCategory = !this.filters.category || category === this.filters.category;
+            const matchDate = !this.filters.date || this.matchDate(date, this.filters.date);
 
             if (matchSearch && matchType && matchCategory && matchDate) {
                 row.style.display = "";
