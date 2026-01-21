@@ -1,3 +1,5 @@
+{% set folder_form = folder_form ?? form %}
+
 {{ form_start(folder_form) }}
     <div class="mb-3">
         {{ form_label(folder_form.ressource.title) }}

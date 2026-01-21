@@ -1,3 +1,5 @@
+{% set file_form = file_form ?? form %}
+
 {{ form_start(file_form) }}
 <div class="mb-3">
     {{ form_label(file_form.ressource.title) }}
@@ -6,9 +8,17 @@
 </div>
 
 <div class="mb-3">
-    {{ form_label(file_form.uploadFile) }}
-    {{ form_widget(file_form.uploadFile, { attr: { class: 'form-control' } }) }}
-    {{ form_errors(file_form.uploadFile) }}
+    {% if ressource is defined and ressource.fileName is defined %}
+        {{ form_row(form.uploadFile, {
+            attr: { class: 'form-control' },
+            help: '<a href="' ~ asset('uploads/' ~ ressource.fileName) ~ '" target="_blank" class="text-decoration-none">Voir le fichier actuel</a>',
+            help_html: true
+        }) }}
+    {% else %}
+        {{ form_label(file_form.uploadFile) }}
+        {{ form_widget(file_form.uploadFile, { attr: { class: 'form-control' } }) }}
+        {{ form_errors(file_form.uploadFile) }}
+    {% endif %}
 </div>
 
 <div class="mb-3">

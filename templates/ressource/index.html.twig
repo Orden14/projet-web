@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-	Accueil
-{% endblock %}
+{% block title %}Mes ressources{% endblock %}
 
 
 {% block body %}
@@ -17,12 +15,14 @@
 				Ajouter</button>
 		</div>
 
-		<div class="folders-section">
+		<div class="folders-section mb-5">
 			<div class="section-header">
-				<h3>Mes dossiers</h3>
+				<h3>{{ current_folder.title ?? 'Mes dossiers' }}</h3>
 			</div>
 			<div class="folders-container">
-				{{ include('components/ressource/_folder.html.twig') }}
+				{% for folder in folders %}
+					{{ include('components/ressource/_folder.html.twig', {'folder': folder}) }}
+				{% endfor %}
 			</div>
 		</div>
 

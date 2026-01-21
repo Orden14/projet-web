@@ -1,3 +1,5 @@
+{% set url_form = url_form ?? form %}
+
 {{ form_start(url_form) }}
     <div class="mb-3">
         {{ form_label(url_form.ressource.title) }}

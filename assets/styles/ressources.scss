@@ -231,3 +231,38 @@
 .row-menu-item:hover {
   background-color: #f3f4f6;
 }
+
+.btn-back-icon {
+  width: 56px;
+  height: 56px;
+  border-width: 2px;
+  border-radius: 50%;
+  transition: transform .15s ease, box-shadow .15s ease, background .2s ease;
+  background: linear-gradient(135deg, rgba(13,110,253,.08), rgba(13,110,253,.02));
+}
+
+.btn-back-icon i {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.btn-back-icon:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.6rem 1.2rem rgba(13,110,253,.25);
+  background: linear-gradient(135deg, rgba(13,110,253,.18), rgba(13,110,253,.06));
+}
+
+a.no-underline,
+a.no-underline:hover,
+a.no-underline:focus,
+a.no-underline:active,
+a.text-decoration-none,
+a.text-decoration-none:hover,
+a.text-decoration-none:focus,
+a.text-decoration-none:active,
+a.row-menu-item,
+a.row-menu-item:hover,
+a.row-menu-item:focus,
+a.row-menu-item:active {
+  text-decoration: none !important;
+}

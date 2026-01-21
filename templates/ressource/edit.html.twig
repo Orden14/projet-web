@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier une ressource{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        <a class="mb-3 btn-back-icon d-inline-flex align-items-center justify-content-center shadow-sm"
+           href="{{ path('ressource_index', { 'id': ressource.parent.id }) }}">
+            <i class="bi bi-arrow-left-circle-fill"></i>
+        </a>
+
+        {{ include(form_template_path) }}
+    </div>
+{% endblock %}
+

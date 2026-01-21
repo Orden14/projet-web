@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\File;
 use App\Entity\Folder;
-use App\Entity\node\AbstractRessource;
 use App\Entity\Note;
 use App\Entity\Url;
 use App\Entity\User;
@@ -47,6 +46,7 @@ final class RessourceController extends AbstractController
         }
 
         return $this->render('ressource/index.html.twig', [
+            'current_folder' => $folder,
             'folders' => $this->folderRepository->findInsideFolderByUser($currentUser, $folder),
             'ressources' => $this->ressourceRepository->findMainRessourcesForUserByFolder($currentUser, $folder),
             'folder_form' => $this->ressourceFormsFactory->build(new Folder())->createView(),
@@ -73,9 +73,32 @@ final class RessourceController extends AbstractController
         return $this->redirectToRoute('ressource_index', ['id' => $ressource->getParent()?->getId()]);
     }
 
-    #[Route('/supprimer/{id}', name: 'delete', methods: ['POST'])]
-    public function delete(Request $request, AbstractRessource $ressource): Response
+    #[Route('/modifier/{id}', name: 'edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, int $id): Response
     {
+        $ressource = $this->ressourceRepository->find($id);
+
+        $form = $this->ressourceFormsFactory->build($ressource);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->ressourceFormService->manageRessourceEdition($ressource, $form);
+
+            return $this->redirectToRoute('ressource_index', ['id' => $ressource->getParent()?->getId()]);
+        }
+
+        return $this->render('ressource/edit.html.twig', [
+            'ressource' => $ressource,
+            'form' => $form->createView(),
+            'form_template_path' => $this->ressourceFormService->getFormTemplatePath($ressource->getType()),
+        ]);
+    }
+
+    #[Route('/supprimer/{id}', name: 'delete', methods: ['POST'])]
+    public function delete(Request $request, int $id): Response
+    {
+        $ressource = $this->ressourceRepository->find($id);
+
         /** @var User $currentUser */
         $currentUser = $this->getUser();
 
