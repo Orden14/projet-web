@@ -12,14 +12,11 @@ export default class extends Controller {
         event.preventDefault();
         const selectedText = event.currentTarget.textContent.trim();
 
-        // Mettre à jour le texte du bouton
         const buttonText = this.element.querySelector(".filter-pill");
         buttonText.innerHTML = `${selectedText} <span class="caret">▾</span>`;
 
-        // Fermer le menu
         this.menuTarget.classList.remove("active");
 
-        // Déclencher l'événement de filtre
         this.dispatch("filter-selected", { detail: { value: selectedText } });
     }
 

@@ -24,7 +24,6 @@ export default class extends Controller {
         this.menuTarget.classList.toggle("active");
 
         if (this.menuTarget.classList.contains("active")) {
-            // Ajuste la direction du menu si on est proche du bas de la fenêtre
             const rect = this.menuTarget.getBoundingClientRect();
             const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
 
