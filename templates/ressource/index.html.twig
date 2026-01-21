@@ -5,16 +5,25 @@
 {% endblock %}
 
 
-{% block body %}
+{% block body %}	
 	<h2>Mes ressources</h2>
 	<div class="ressources-section" data-controller="ressources--filter drag-and-drop" data-action="dragenter->drag-and-drop#onDragEnter dragover->drag-and-drop#onDragOver dragleave->drag-and-drop#onDragLeave drop->drag-and-drop#onDrop">
 		<div class="ressources-header">
 			<div class="search-container">
 				<input type="text" class="search-bar" placeholder="Recherche par nom" data-ressources--filter-target="source" data-action="input->ressources--filter#filter">
 			</div>
-			<button class="add-button">
-				<i class="bi bi-plus"></i>
-				Ajouter</button>
+			<div class="dropdown">
+				<button class="add-button dropdown-toggle" type="button" id="addDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+					<i class="bi bi-plus"></i>
+					Ajouter
+				</button>
+				<ul class="dropdown-menu" aria-labelledby="addDropdown">
+					<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createFileModal"><i class="bi bi-file-earmark"></i> Fichier</a></li>
+					<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createUrlModal"><i class="bi bi-link-45deg"></i> Lien</a></li>
+					<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createNoteModal"><i class="bi bi-journal-text"></i> Note</a></li>
+					<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createFolderModal"><i class="bi bi-folder"></i> Dossier</a></li>
+				</ul>
+			</div>
 		</div>
 
 		<div class="folders-section">
@@ -37,4 +46,9 @@
 			{{ include('components/ressource/_table.html.twig')}}
 		</div>
 	</div>
+
+	{{ include('ressource/component/modal_create_file.html.twig') }}
+	{{ include('ressource/component/modal_create_url.html.twig') }}
+	{{ include('ressource/component/modal_create_note.html.twig') }}
+	{{ include('ressource/component/modal_create_folder.html.twig') }}
 {% endblock %}
