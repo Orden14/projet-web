@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Factory\CategoryFactory;
+use App\Factory\CategoryEntityFactory;
 use App\Repository\UserRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -14,7 +14,7 @@ final class CategoryFixtures extends Fixture implements DependentFixtureInterfac
 
     public function __construct(
         private readonly UserRepository $userRepository,
-        private readonly CategoryFactory $categoryFactory,
+        private readonly CategoryEntityFactory $categoryFactory,
     ) {
     }
 

@@ -5,7 +5,7 @@ namespace App\Factory;
 use App\Interface\FactoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-abstract class AbstractFactory implements FactoryInterface
+abstract class AbstractEntityFactory implements FactoryInterface
 {
     protected ?object $entity = null;
 

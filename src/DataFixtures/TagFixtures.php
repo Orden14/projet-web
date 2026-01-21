@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Factory\TagFactory;
+use App\Factory\TagEntityFactory;
 use App\Repository\UserRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -16,7 +16,7 @@ final class TagFixtures extends Fixture implements DependentFixtureInterface
     ];
 
     public function __construct(
-        private readonly TagFactory $tagFactory,
+        private readonly TagEntityFactory $tagFactory,
         private readonly UserRepository $userRepository,
     ) {
     }

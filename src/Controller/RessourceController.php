@@ -2,17 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\File;
 use App\Entity\Folder;
 use App\Entity\node\AbstractRessource;
-use App\Entity\Note;
-use App\Entity\Url;
 use App\Entity\User;
 use App\Enum\RolesEnum;
-use App\Form\FileType;
-use App\Form\FolderType;
-use App\Form\NoteType;
-use App\Form\UrlType;
+use App\Factory\RessourceFormsFactory;
 use App\Repository\FolderRepository;
 use App\Repository\RessourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,6 +24,7 @@ final class RessourceController extends AbstractController
         private readonly FolderRepository $folderRepository,
         private readonly EntityManagerInterface $entityManager,
         private readonly RessourceRepository $ressourceRepository,
+        private readonly RessourceFormsFactory $ressourceFormsFactory,
     ) {
     }
 
@@ -39,25 +34,7 @@ final class RessourceController extends AbstractController
         /** @var User $currentUser */
         $currentUser = $this->getUser();
 
-        $folderForm = $this->createForm(FolderType::class, new Folder(), [
-            'action' => $this->generateUrl('folder_create'),
-            'method' => 'POST',
-        ]);
-
-        $urlForm = $this->createForm(UrlType::class, new Url(), [
-            'action' => $this->generateUrl('url_create'),
-            'method' => 'POST',
-        ]);
-
-        $fileForm = $this->createForm(FileType::class, new File(), [
-            'action' => $this->generateUrl('file_create'),
-            'method' => 'POST',
-        ]);
-
-        $noteForm = $this->createForm(NoteType::class, new Note(), [
-            'action' => $this->generateUrl('note_create'),
-            'method' => 'POST',
-        ]);
+        $ressourceForms = $this->ressourceFormsFactory->build();
 
         if ($folder && $folder->getOwner() !== $currentUser) {
             throw $this->createAccessDeniedException("Vous n'avez pas accès à ce dossier.");
@@ -66,15 +43,15 @@ final class RessourceController extends AbstractController
         return $this->render('ressource/index.html.twig', [
             'folders' => $this->folderRepository->findInsideFolderByUser($currentUser, $folder),
             'ressources' => $this->ressourceRepository->findMainRessourcesForUserByFolder($currentUser, $folder),
-            'folder_form' => $folderForm->createView(),
-            'url_form' => $urlForm->createView(),
-            'file_form' => $fileForm->createView(),
-            'note_form' => $noteForm->createView(),
+            'folder_form' => $ressourceForms->getFolderForm()->createView(),
+            'file_form' => $ressourceForms->getFileForm()->createView(),
+            'url_form' => $ressourceForms->getUrlForm()->createView(),
+            'note_form' => $ressourceForms->getNoteForm()->createView(),
         ]);
     }
 
     #[Route('/supprimer/{id}', name: 'delete', methods: ['POST'])]
-    public function deleteFolder(Request $request, AbstractRessource $ressource): Response
+    public function delete(Request $request, AbstractRessource $ressource): Response
     {
         /** @var User $currentUser */
         $currentUser = $this->getUser();
