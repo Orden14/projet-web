@@ -10,6 +10,7 @@ use App\Entity\User;
 use App\Enum\RessourceTypeEnum;
 use App\Enum\RolesEnum;
 use App\Factory\RessourceFormFactory;
+use App\Repository\CategoryRepository;
 use App\Repository\FolderRepository;
 use App\Repository\RessourceRepository;
 use App\Service\Ressource\RessourceFormService;
@@ -32,6 +33,7 @@ final class RessourceController extends AbstractController
         private readonly RessourceRepository $ressourceRepository,
         private readonly RessourceFormService $ressourceFormService,
         private readonly RessourceFormFactory $ressourceFormsFactory,
+        private readonly CategoryRepository $categoryRepository,
     ) {
     }
 
@@ -49,6 +51,7 @@ final class RessourceController extends AbstractController
             'current_folder' => $folder,
             'folders' => $this->folderRepository->findInsideFolderByUser($currentUser, $folder),
             'ressources' => $this->ressourceRepository->findMainRessourcesForUserByFolder($currentUser, $folder),
+            'categories' => $this->categoryRepository->findByUser($currentUser),
             'folder_form' => $this->ressourceFormsFactory->build(new Folder())->createView(),
             'file_form' => $this->ressourceFormsFactory->build(new File())->createView(),
             'url_form' => $this->ressourceFormsFactory->build(new Url())->createView(),

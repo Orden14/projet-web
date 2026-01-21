@@ -42,7 +42,8 @@ final class RessourceRepository extends ServiceEntityRepository
         }
 
         return $queryBuilder
-            ->orderBy('r.title', 'DESC')
+            ->addSelect('CASE WHEN r.updateDate IS NOT NULL THEN r.updateDate ELSE r.creationDate END AS HIDDEN sortDate')
+            ->orderBy('sortDate', 'DESC')
             ->getQuery()
             ->getResult()
         ;

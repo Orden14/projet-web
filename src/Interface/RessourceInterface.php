@@ -30,7 +30,7 @@ interface RessourceInterface
 
     public function setCreationDate(DateTimeInterface $creationDate): static;
 
-    public function getUpdateDate(): DateTimeInterface;
+    public function getUpdateDate(): ?DateTimeInterface;
 
     public function setUpdateDate(DateTimeInterface $updateDate): static;
 
