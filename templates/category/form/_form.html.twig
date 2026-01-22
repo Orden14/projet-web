@@ -1,0 +1,15 @@
+{% set category_form = category_form ?? form %}
+
+{{ form_start(category_form) }}
+
+<div class="mb-3">
+    {{ form_label(category_form.name) }}
+    {{ form_widget(category_form.name, { attr: { class: 'form-control', placeholder: 'Nom de la categorie' } }) }}
+    {{ form_errors(category_form.name) }}
+</div>
+
+<div class="d-grid">
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+</div>
+
+{{ form_end(category_form) }}

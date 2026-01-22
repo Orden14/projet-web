@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes categories{% endblock %}
+
+{% block body %}
+    <h2>Mes categories</h2>
+    <div class="ressources-section">
+        <div class="ressources-header">
+            <div class="search-container"></div>
+            <button class="add-button" data-bs-toggle="modal" data-bs-target="#createCategoryModal">
+                <i class="bi bi-plus"></i>
+                Ajouter</button>
+        </div>
+
+        <div class="files-table">
+            {{ include('components/category/_table.html.twig') }}
+        </div>
+    </div>
+    {{ include('category/component/modal_create_category.html.twig') }}
+{% endblock %}

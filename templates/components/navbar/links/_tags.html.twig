@@ -1,0 +1,5 @@
+<li class="nav-item">
+    <a class="nav-link {{ app.request.attributes.get('_route') starts with 'tag_' ? 'active' : '' }}" aria-current="page" href="{{ path('tag_index') }}">
+        <i class="bi bi-tags"></i> Mes tags
+    </a>
+</li>

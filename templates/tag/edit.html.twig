@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un tag{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <a class="mb-4 btn-back-material d-inline-flex align-items-center text-decoration-none" href="{{ path('tag_index') }}">
+            <i class="bi bi-arrow-left"></i>
+            <span>Retour</span>
+        </a>
+        <h1>Modifier un tag</h1>
+        {{ include('tag/form/_form.html.twig', { tag_form: form }) }}
+    </div>
+{% endblock %}

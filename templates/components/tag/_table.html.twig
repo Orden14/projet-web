@@ -1,0 +1,40 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Couleur</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tag in tags %}
+            <tr>
+                <td>{{ tag.title }}</td>
+                <td>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="rounded-circle" style="display: inline-block; width: 18px; height: 18px; background-color: {{ tag.color }};"></span>
+                        <span class="text-muted">{{ tag.color }}</span>
+                    </div>
+                </td>
+                <td class="text-end position-relative" data-controller="row-menu">
+                    <button class="btn btn-sm" type="button" data-action="click->row-menu#toggle">
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <div class="filter-menu row-menu" data-row-menu-target="menu">
+                        <a type="button" class="row-menu-item" href="{{ path('tag_edit', { 'id': tag.id }) }}">Modifier</a>
+                        <form id="delete_tag_{{ tag.id }}" method="post" action="{{ path('tag_delete', {'id': tag.id}) }}" data-controller="confirm">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete_tag_' ~ tag.id) }}">
+                            <a type="button" class="row-menu-item flex-shrink-0" data-action="confirm#confirmDeletion" title="Supprimer" data-bs-toggle="tooltip">
+                                Supprimer
+                            </a>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3" class="text-center text-muted">Aucun tag pour le moment.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

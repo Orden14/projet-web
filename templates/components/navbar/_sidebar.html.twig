@@ -8,6 +8,8 @@
 
 		<nav class="sidebar-nav">
 			{% include 'components/navbar/links/_ressources.html.twig' %}
+			{% include 'components/navbar/links/_categories.html.twig' %}
+			{% include 'components/navbar/links/_tags.html.twig' %}
 			{% include 'components/navbar/links/_calendar.html.twig' %}
 			{% include 'components/navbar/links/_contact.html.twig' %}
 			{% if is_granted('ROLE_ADMIN') %}
