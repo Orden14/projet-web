@@ -1,0 +1,75 @@
+<table id="ressourcesTable" class="table table-hover">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Nom</th>
+			<th>Type</th>
+			<th>Catégorie</th>
+			<th>Dernière modification</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for ressource in ressources %}
+		{% set date = ressource.getUpdateDate() ? ressource.getUpdateDate()|date('Y-m-d') : ressource.getCreationDate()|date('Y-m-d') %}
+		{% set type = ressource.getType().value %}
+		<tr data-ressources--filter-target="row"
+			data-name="{{ ressource.title }}"
+			data-type="{{ type }}"
+			data-category="{{ ressource.category.name }}"
+			data-date="{{ date }}"
+			data-favorite="{{ ressource.isFavorite() ? 'true' : 'false' }}"
+			{% if type == 'url' %}
+			data-controller="ressources--row"
+			data-action="click->ressources--row#open"
+			data-ressources--row-url-value="{{ ressource.url }}"
+			style="cursor: pointer;"
+			{% elseif type != 'folder' %}
+			data-controller="ressources--row"
+			data-action="click->ressources--row#openDetail"
+			data-ressources--row-detail-url-value="{{ path('ressource_detail', { 'id': ressource.id }) }}"
+			style="cursor: pointer;"
+			{% endif %}
+			{% if ressource.description %}
+			data-bs-toggle="tooltip"
+			data-bs-placement="top"
+			title="{{ ressource.description }}"
+			{% endif %}>
+			<td data-controller="favorite" data-favorite-target="star">
+				<form method="post" action="{{ path('ressource_toggle_favorite', { 'id': ressource.id }) }}" style="display: inline;">
+					<input type="hidden" name="_token" value="{{ csrf_token('favorite' ~ ressource.id) }}">
+					<button type="button" class="btn btn-link p-0" data-action="favorite#toggleFavorite" data-ressource-id="{{ ressource.id }}" style="border: none; background: none; cursor: pointer;">
+						<i class="bi {% if ressource.isFavorite() %}bi-star-fill{% else %}bi-star{% endif %}" style="color: {% if ressource.isFavorite() %}gold{% else %}grey{% endif %};"></i>
+					</button>
+				</form>
+			</td>
+			<td>
+				{{ ressource.title }}
+				{% for tag in ressource.tags %}
+					<span class="tag" style="background-color: {{ tag.color }}">{{ tag.title }}</span>
+				{% endfor %}
+			</td>
+			<td>{{ ressource.type.value|capitalize }}</td>
+			<td>{{ ressource.category.name }}</td>
+			<td>{{ date }}</td>
+			<td class="text-end position-relative" data-controller="row-menu">
+				<button class="btn btn-sm" type="button" data-action="click->row-menu#toggle">
+					<i class="bi bi-three-dots-vertical"></i>
+				</button>
+				<div class="filter-menu row-menu" data-row-menu-target="menu">
+					<a class="row-menu-item no-underline text-decoration-none" href="{{ path('ressource_edit', { 'id': ressource.id }) }}">Modifier</a>
+					<form id="delete{{ ressource.id }}" method="post" action="{{ path('ressource_delete', {'id': ressource.id}) }}" data-controller="confirm">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ressource.id) }}">
+						<a type="button" class="row-menu-item flex-shrink-0" id="{{ ressource.id }}" data-action="confirm#confirmDeletion" title="Supprimer" data-bs-toggle="tooltip">
+							Supprimer
+						</a>
+					</form>
+					{% if ressource.type.value == "file" %}
+						<button type="button" class="row-menu-item">Télécharger</button>
+					{% endif %}
+				</div>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>

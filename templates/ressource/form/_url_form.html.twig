@@ -1,0 +1,58 @@
+{% set url_form = url_form ?? form %}
+
+{{ form_start(url_form) }}
+    <div class="mb-3">
+        {{ form_label(url_form.ressource.title) }}
+        {{ form_widget(url_form.ressource.title, { attr: { class: 'form-control', placeholder: 'Titre' } }) }}
+        {{ form_errors(url_form.ressource.title) }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(url_form.url) }}
+        {{ form_widget(url_form.url, { attr: { class: 'form-control', placeholder: 'URL' } }) }}
+        {{ form_errors(url_form.url) }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(url_form.ressource.description) }}
+        {{ form_widget(url_form.ressource.description, { attr: { class: 'form-control', rows:3 } }) }}
+        {{ form_errors(url_form.ressource.description) }}
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            {{ form_label(url_form.ressource.parent) }}
+            {{ form_widget(url_form.ressource.parent, { attr: { class: 'form-select' } }) }}
+            {{ form_errors(url_form.ressource.parent) }}
+        </div>
+        <div class="col-md-6 mb-3">
+            {{ form_label(url_form.ressource.category) }}
+            {{ form_widget(url_form.ressource.category, { attr: { class: 'form-select' } }) }}
+            {{ form_errors(url_form.ressource.category) }}
+        </div>
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(url_form.ressource.tags) }}
+        {{ form_widget(url_form.ressource.tags, {
+            attr: {
+                class: 'selectpicker',
+                'data-style-base': 'form-control',
+                'data-width': '100%',
+                'data-container': 'body',
+                multiple: 'multiple'
+            }
+        }) }}
+        {{ form_errors(url_form.ressource.tags) }}
+    </div>
+
+    <div class="form-check mb-3">
+        {{ form_widget(url_form.ressource.favorite, { attr: { class: 'form-check-input' } }) }}
+        {{ form_label(url_form.ressource.favorite, null, { label_attr: { class: 'form-check-label' } }) }}
+        {{ form_errors(url_form.ressource.favorite) }}
+    </div>
+
+    <div class="d-grid">
+        <button type="submit" class="btn btn-primary">Enregistrer l'URL </button>
+    </div>
+{{ form_end(url_form) }}

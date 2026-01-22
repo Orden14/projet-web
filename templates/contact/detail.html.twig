@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ contact.contactName }}{% endblock %}
+
+{% block body %}
+	<div class="ressources-section">
+		<div class="ressources-header">
+			<div>
+				<a href="{{ path('contact_index') }}" class="btn-back-material d-inline-flex align-items-center text-decoration-none" title="Retour">
+					<i class="bi bi-arrow-left"></i>
+				</a>
+			</div>
+			<div style="flex: 1; display: flex; align-items: center; gap: 0.75rem;">
+				<h2 style="margin: 0;">{{ contact.contactName }}</h2>
+				{% if contact.title %}
+					<span class="badge bg-secondary">{{ contact.title }}</span>
+				{% endif %}
+			</div>
+			<div class="text-end position-relative" data-controller="row-menu">
+				<button class="btn btn-sm" type="button" data-action="click->row-menu#toggle">
+					<i class="bi bi-three-dots-vertical"></i>
+				</button>
+				<div class="filter-menu row-menu" data-row-menu-target="menu">
+					<a class="row-menu-item no-underline text-decoration-none" href="{{ path('contact_edit', { 'id': contact.id }) }}">Modifier</a>
+					<form id="delete{{ contact.id }}" method="post" action="{{ path('contact_delete', {'id': contact.id}) }}" data-controller="confirm">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contact.id) }}">
+						<a type="button" class="row-menu-item flex-shrink-0" id="{{ contact.id }}" data-action="confirm#confirmDeletion" title="Supprimer" data-bs-toggle="tooltip">
+							Supprimer
+						</a>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="detail-content mt-4">
+			<!-- Infos principales -->
+			<div class="row mb-4">
+				<div class="col-md-6">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Informations</h5>
+							<dl class="row">
+								{% if contact.contactNumber %}
+									<dt class="col-sm-4">Téléphone:</dt>
+									<dd class="col-sm-8">
+										<a href="tel:{{ contact.contactNumber }}">{{ contact.contactNumber }}</a>
+									</dd>
+								{% endif %}
+
+								{% if contact.contactEmail %}
+									<dt class="col-sm-4">Email:</dt>
+									<dd class="col-sm-8">
+										<a href="mailto:{{ contact.contactEmail }}">{{ contact.contactEmail }}</a>
+									</dd>
+								{% endif %}
+
+								<dt class="col-sm-4">Catégorie:</dt>
+								<dd class="col-sm-8">{{ contact.category.name }}</dd>
+
+								<dt class="col-sm-4">Créé:</dt>
+								<dd class="col-sm-8">{{ contact.creationDate|date('d/m/Y') }}</dd>
+
+								{% if contact.updateDate %}
+									<dt class="col-sm-4">Modifié:</dt>
+									<dd class="col-sm-8">{{ contact.updateDate|date('d/m/Y') }}</dd>
+								{% endif %}
+							</dl>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Description -->
+			{% if contact.description %}
+				<div class="card mb-4">
+					<div class="card-body">
+						<h5 class="card-title">Description</h5>
+						<p class="card-text">{{ contact.description }}</p>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

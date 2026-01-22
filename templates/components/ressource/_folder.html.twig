@@ -1,0 +1,16 @@
+<a href="{{ path('ressource_index', { 'id': folder.id  ?? '' }) }}" class="no-underline">
+    <div class="folder-card position-relative" data-controller="row-menu">
+        <div class="folder-icon">
+            <i class="bi bi-folder"></i>
+        </div>
+        <div class="folder-info">
+            <h4>{{ folder.title ?? '' }}</h4>
+        </div>
+        <button class="folder-options" type="button" data-action="click->row-menu#toggle">
+            <i class="bi bi-three-dots-vertical"></i>
+        </button>
+        <div class="filter-menu row-menu" data-row-menu-target="menu">
+            <button type="button" class="row-menu-item">Supprimer</button>
+        </div>
+    </div>
+</a>

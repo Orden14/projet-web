@@ -9,7 +9,7 @@ final readonly class LoginCest
     public function testLoginWithValidCredentials(AcceptanceTester $I): void
     {
         $I->loginAs('admin');
-        $I->seeCurrentUrlEquals('/');
+        $I->seeCurrentUrlEquals('/mes-ressources');
     }
 
     public function testLoginWithInvalidCredentials(AcceptanceTester $I): void

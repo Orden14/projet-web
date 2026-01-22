@@ -1,0 +1,42 @@
+<table id="ressourcesTable" class="table table-hover">
+	<thead>
+		<tr>
+			<th>Nom</th>
+			<th>Métier</th>
+			<th>Catégorie</th>
+			<th>Numéro de téléphone</th>
+			<th>Email</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for contact in contacts %}
+		<tr data-contact--contact-filter-target="row"
+			data-name="{{ contact.contactName }}"
+			data-phone="{{ contact.contactNumber }}"
+			data-email="{{ contact.contactEmail }}"
+			style="cursor: pointer;"
+			onclick="window.location.href='{{ path('contact_detail', { 'id': contact.id }) }}'">
+			<td>{{ contact.contactName }}</td>
+			<td>{{ contact.title }}</td>
+			<td>{{ contact.category.name }}</td>
+			<td>{{ contact.contactNumber}}</td>
+			<td>{{ contact.contactEmail}}</td>
+			<td class="text-end position-relative" data-controller="row-menu" onclick="event.stopPropagation()">
+				<button class="btn btn-sm" type="button" data-action="click->row-menu#toggle">
+					<i class="bi bi-three-dots-vertical"></i>
+				</button>
+				<div class="filter-menu row-menu" data-row-menu-target="menu">
+					<a type="button" class="row-menu-item" href="{{ path('contact_edit', { 'id': contact.id }) }}">Modifier</a>
+					<form id="delete{{ contact.id }}" method="post" action="{{ path('contact_delete', {'id': contact.id}) }}" data-controller="confirm">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contact.id) }}">
+						<a type="button" class="row-menu-item flex-shrink-0" id="{{ contact.id }}" data-action="confirm#confirmDeletion" title="Supprimer" data-bs-toggle="tooltip">
+							Supprimer
+						</a>
+					</form>
+				</div>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>

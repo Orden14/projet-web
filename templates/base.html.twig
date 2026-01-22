@@ -2,25 +2,31 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>Gestion de ressources personnelles | {% block title %}{% endblock %}</title>
+        <title>MyDrive | {% block title %}{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block header %}
-            {{ include('components/navbar/_navbar.html.twig') }}
-        {% endblock %}
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+	</head>
+	<body>
+		<div class="d-flex" style="min-height: 100vh; background-color: #f7f9fc;">
+                {% block sidebar %}
+                    {{ include('components/navbar/_sidebar.html.twig') }}
+                {% endblock %}
+			<div class="flex-grow-1 d-flex flex-column">
+				{% block top_header %}
+					{{ include('components/navbar/_top_header.html.twig') }}
+				{% endblock %}
 
-        <div class="container mt-4 ">
-            {% block body %}{% endblock %}
-        </div>
-    </body>
-</html>
+				<div class="flex-grow-1 p-4"> {% block body %}{% endblock %}
+					</div>
+				</div>
+			</div>
+		</body>
+	</html>

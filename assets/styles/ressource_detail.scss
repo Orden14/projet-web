@@ -1,0 +1,33 @@
+.detail-content {
+    max-width: 900px;
+}
+
+.ressources-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.card-title {
+    color: #495057;
+    font-weight: 600;
+}
+
+dl.row {
+    margin-bottom: 0;
+}
+
+dt {
+    font-weight: 600;
+    color: #495057;
+}
+
+dd {
+    color: #6c757d;
+}

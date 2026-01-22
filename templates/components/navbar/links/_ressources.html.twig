@@ -1,3 +1,3 @@
 <li class="nav-item">
-    <a class="nav-link {{ app.request.attributes.get('_route') starts with 'ressources_' ? 'active' : '' }}" aria-current="page" href="#">Ressources</a>
+    <a class="nav-link {{ app.request.attributes.get('_route') starts with 'ressource_' ? 'active' : '' }}" aria-current="page" href="{{ path('ressource_index') }}"><i class="bi bi-archive"></i> Mes Ressources</a>
 </li>

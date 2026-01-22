@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes contacts{% endblock %}
+
+
+{% block body %}
+	<h2>Mes contacts</h2>
+	<div class="ressources-section" data-controller="contact--contact-filter">
+		<div class="ressources-header">
+			<div class="search-container">
+				<input type="text" class="search-bar" placeholder="Recherche par nom, téléphone ou email" data-action="input->contact--contact-filter#filter">
+			</div>
+			<button class="add-button" data-bs-toggle="modal" data-bs-target="#createContactModal">
+				<i class="bi bi-plus"></i>
+				Ajouter</button>
+		</div>
+
+		<div class="files-section">
+			<div class="section-header">
+				<h3>Mes contacts</h3>
+			</div>
+		</div>
+
+		<div class="files-table">
+			{{ include('components/contact/_table.html.twig') }}
+		</div>
+	</div>
+	{{ include('contact/component/modal_create_contact.html.twig') }}
+{% endblock %}

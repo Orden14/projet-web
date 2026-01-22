@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes ressources{% endblock %}
+
+{% block body %}
+	<h2>Mes ressources</h2>
+	<div class="ressources-section" data-controller="ressources--filter ressources--drag-and-drop" data-action="dragenter->ressources--drag-and-drop#onDragEnter dragover->ressources--drag-and-drop#onDragOver dragleave->ressources--drag-and-drop#onDragLeave drop->ressources--drag-and-drop#onDrop">
+		<div class="ressources-header">
+			<div class="search-container">
+				<input type="text" class="search-bar" placeholder="Recherche par nom" data-ressources--filter-target="source" data-action="input->ressources--filter#filter">
+			</div>
+			<div class="dropdown">
+				<button class="add-button dropdown-toggle" type="button" id="addDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+					<i class="bi bi-plus"></i>
+					Ajouter
+				</button>
+				<ul class="dropdown-menu" aria-labelledby="addDropdown">
+					<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createFileModal"><i class="bi bi-file-earmark"></i> Fichier</a></li>
+					<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createUrlModal"><i class="bi bi-link-45deg"></i> Lien</a></li>
+					<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createNoteModal"><i class="bi bi-journal-text"></i> Note</a></li>
+					<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createFolderModal"><i class="bi bi-folder"></i> Dossier</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="folders-section mb-4">
+			<div class="section-header">
+				{% if current_folder %}
+					<h3>
+						<a href="{{ path('ressource_index') }}">Mes dossiers</a>
+						<span class="text-muted">›</span>
+						{% for crumb in breadcrumb %}
+							{% if not loop.first %}<span class="text-muted">›</span>{% endif %}
+							<a href="{{ path('ressource_index', {'id': crumb.id}) }}">{{ crumb.title }}</a>
+						{% endfor %}
+					</h3>
+				{% else %}
+					<h3>Mes dossiers</h3>
+				{% endif %}
+			</div>
+			<div class="folders-container">
+				{% for folder in folders %}
+					{{ include('components/ressource/_folder.html.twig') }}
+				{% endfor %}
+			</div>
+		</div>
+
+		<div class="files-section">
+			<div class="section-header">
+				<h3>Mes fichiers</h3>
+			</div>
+			{{ include('components/ressource/_filter.html.twig') }}
+		</div>
+
+		<div class="files-table">
+			{{ include('components/ressource/_table.html.twig')}}
+		</div>
+	</div>
+
+	{{ include('ressource/component/modal_create_file.html.twig') }}
+	{{ include('ressource/component/modal_create_url.html.twig') }}
+	{{ include('ressource/component/modal_create_note.html.twig') }}
+	{{ include('ressource/component/modal_create_folder.html.twig') }}
+{% endblock %}
