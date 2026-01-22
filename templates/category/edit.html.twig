@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier une categorie{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <a class="mb-4 btn-back-material d-inline-flex align-items-center text-decoration-none" href="{{ path('category_index') }}">
+            <i class="bi bi-arrow-left"></i>
+            <span>Retour</span>
+        </a>
+        <h1>Modifier une categorie</h1>
+        {{ include('category/form/_form.html.twig', { category_form: form }) }}
+    </div>
+{% endblock %}

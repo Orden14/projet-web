@@ -1,0 +1,5 @@
+<li class="nav-item">
+    <a class="nav-link {{ app.request.attributes.get('_route') starts with 'category_' ? 'active' : '' }}" aria-current="page" href="{{ path('category_index') }}">
+        <i class="bi bi-collection"></i> Mes categories
+    </a>
+</li>

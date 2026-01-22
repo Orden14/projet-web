@@ -1,0 +1,21 @@
+{% set tag_form = tag_form ?? form %}
+
+{{ form_start(tag_form) }}
+
+<div class="mb-3">
+    {{ form_label(tag_form.title) }}
+    {{ form_widget(tag_form.title, { attr: { class: 'form-control', placeholder: 'Titre du tag' } }) }}
+    {{ form_errors(tag_form.title) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(tag_form.color) }}
+    {{ form_widget(tag_form.color, { attr: { class: 'form-control form-control-color' } }) }}
+    {{ form_errors(tag_form.color) }}
+</div>
+
+<div class="d-grid">
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+</div>
+
+{{ form_end(tag_form) }}
