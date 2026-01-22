@@ -4,7 +4,7 @@
 
 {% block body %}
 	<h2>Mes ressources</h2>
-	<div class="ressources-section" data-controller="ressources--filter drag-and-drop" data-action="dragenter->drag-and-drop#onDragEnter dragover->drag-and-drop#onDragOver dragleave->drag-and-drop#onDragLeave drop->drag-and-drop#onDrop">
+	<div class="ressources-section" data-controller="ressources--filter ressources--drag-and-drop" data-action="dragenter->ressources--drag-and-drop#onDragEnter dragover->ressources--drag-and-drop#onDragOver dragleave->ressources--drag-and-drop#onDragLeave drop->ressources--drag-and-drop#onDrop">
 		<div class="ressources-header">
 			<div class="search-container">
 				<input type="text" class="search-bar" placeholder="Recherche par nom" data-ressources--filter-target="source" data-action="input->ressources--filter#filter">
