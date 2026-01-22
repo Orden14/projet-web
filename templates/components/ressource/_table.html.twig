@@ -1,6 +1,7 @@
 <table id="ressourcesTable" class="table table-hover">
 	<thead>
 		<tr>
+			<th></th>
 			<th>Nom</th>
 			<th>Type</th>
 			<th>Catégorie</th>
@@ -17,14 +18,23 @@
 			data-name="{{ ressource.title }}"
 			data-type="{{ ressource.getType().value }}"
 			data-category="{{ ressource.category.name }}"
-			data-date="{{ date }}">
+			data-date="{{ date }}"
+			data-favorite="{{ ressource.isFavorite() ? 'true' : 'false' }}">
+			<td data-controller="favorite" data-favorite-target="star">
+				<form method="post" action="{{ path('ressource_toggle_favorite', { 'id': ressource.id }) }}" style="display: inline;">
+					<input type="hidden" name="_token" value="{{ csrf_token('favorite' ~ ressource.id) }}">
+					<button type="button" class="btn btn-link p-0" data-action="favorite#toggleFavorite" data-ressource-id="{{ ressource.id }}" style="border: none; background: none; cursor: pointer;">
+						<i class="bi {% if ressource.isFavorite() %}bi-star-fill{% else %}bi-star{% endif %}" style="color: {% if ressource.isFavorite() %}gold{% else %}grey{% endif %};"></i>
+					</button>
+				</form>
+			</td>
 			<td>
 				{{ ressource.title }}
 				{% for tag in ressource.tags %}
 					<span class="tag" style="background-color: {{ tag.color }}">{{ tag.title }}</span>
 				{% endfor %}
 			</td>
-			<td>{{ ressource.type.value }}</td>
+			<td>{{ ressource.type.value|capitalize }}</td>
 			<td>{{ ressource.category.name }}</td>
 			<td>{{ date }}</td>
 			<td class="text-end position-relative" data-controller="row-menu">

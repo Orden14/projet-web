@@ -47,6 +47,14 @@ final class RessourceController extends AbstractController
             throw $this->createAccessDeniedException("Vous n'avez pas accès à ce dossier.");
         }
 
+        $breadcrumb = [];
+        $cursor = $folder;
+        while ($cursor) {
+            $breadcrumb[] = $cursor;
+            $cursor = $cursor->getParent();
+        }
+        $breadcrumb = array_reverse($breadcrumb);
+
         return $this->render('ressource/index.html.twig', [
             'current_folder' => $folder,
             'folders' => $this->folderRepository->findInsideFolderByUser($currentUser, $folder),
@@ -56,6 +64,7 @@ final class RessourceController extends AbstractController
             'file_form' => $this->ressourceFormsFactory->build(new File())->createView(),
             'url_form' => $this->ressourceFormsFactory->build(new Url())->createView(),
             'note_form' => $this->ressourceFormsFactory->build(new Note())->createView(),
+            'breadcrumb' => $breadcrumb,
         ]);
     }
 
@@ -95,6 +104,26 @@ final class RessourceController extends AbstractController
             'form' => $form->createView(),
             'form_template_path' => $this->ressourceFormService->getFormTemplatePath($ressource->getType()),
         ]);
+    }
+
+    #[Route('/toggle-favorite/{id}', name: 'toggle_favorite', methods: ['POST'])]
+    public function toggleFavorite(Request $request, int $id): Response
+    {
+        $ressource = $this->ressourceRepository->find($id);
+
+        /** @var User $currentUser */
+        $currentUser = $this->getUser();
+
+        if ($ressource->getOwner() !== $currentUser) {
+            throw $this->createAccessDeniedException("Vous n'avez pas accès à cette ressource.");
+        }
+
+        if ($this->isCsrfTokenValid('favorite' . $ressource->getId(), $request->request->get('_token'))) {
+            $ressource->setFavorite(!$ressource->isFavorite());
+            $this->entityManager->flush();
+        }
+
+        return $this->json(['favorite' => $ressource->isFavorite()]);
     }
 
     #[Route('/supprimer/{id}', name: 'delete', methods: ['POST'])]
