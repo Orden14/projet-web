@@ -9,12 +9,17 @@
     gap: 8px;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.1);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
 
     &:hover {
         background: #f8f9fa;
         border-color: #dadce0;
         box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.15);
         color: #202124;
+        text-decoration: none;
     }
 
     &:active {
