@@ -10,6 +10,8 @@
 			{% include 'components/navbar/links/_ressources.html.twig' %}
 			{% include 'components/navbar/links/_calendar.html.twig' %}
 			{% include 'components/navbar/links/_contact.html.twig' %}
+			{% include 'components/navbar/links/_categories.html.twig' %}
+			{% include 'components/navbar/links/_tags.html.twig' %}
 			{% if is_granted('ROLE_ADMIN') %}
 				{% include 'components/navbar/links/admin/_administration.html.twig' %}
 			{% endif %}
