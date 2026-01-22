@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Enum\RessourceTypeEnum;
 use App\Interface\RessourceInterface;
 use App\Util\File\FileManager;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use LogicException;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -51,6 +52,8 @@ final readonly class RessourceFormService
         if ($ressource instanceof File) {
             $this->manageFileUpload($ressource, $form);
         }
+
+        $ressource->setUpdateDate(new DateTime());
 
         $this->entityManager->flush();
     }

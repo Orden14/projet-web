@@ -1,0 +1,60 @@
+{% set event_form = event_form ?? form %}
+
+<div class="modal fade" id="manageEventModal" tabindex="-1" role="dialog" aria-labelledby="manageEventModalLabel" aria-hidden="true" data-bs-focus="false">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="manageEventModalLabel">Ajouter un évènement</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{ form_start(event_form) }}
+                    <div class="mb-3">
+                        {{ form_label(event_form.title) }}
+                        {{ form_widget(event_form.title, { attr: { class: 'form-control', placeholder: 'Titre' } }) }}
+                        {{ form_errors(event_form.title) }}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form_label(event_form.startDate) }}
+                            {{ form_widget(event_form.startDate) }}
+                            {{ form_errors(event_form.startDate) }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form_label(event_form.endDate) }}
+                            {{ form_widget(event_form.endDate) }}
+                            {{ form_errors(event_form.endDate) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="mb-3 col-3">
+                            {{ form_label(event_form.color) }}
+                            {{ form_widget(event_form.color, { attr: { class: 'form-control form-control-color' } }) }}
+                            {{ form_errors(event_form.color) }}
+                        </div>
+
+                        <div class="mb-3 col-9">
+                            {{ form_label(event_form.category) }}
+                            {{ form_widget(event_form.category, { attr: { class: 'form-select' } }) }}
+                            {{ form_errors(event_form.category) }}
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(event_form.description) }}
+                        {{ form_widget(event_form.description, { attr: { class: 'form-control', rows: 3 } }) }}
+                        {{ form_errors(event_form.description) }}
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            {{ form_end(event_form) }}
+        </div>
+    </div>
+</div>

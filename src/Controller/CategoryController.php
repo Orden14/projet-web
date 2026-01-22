@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Enum\RolesEnum;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
+use App\Repository\RessourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,8 +20,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class CategoryController extends AbstractController
 {
     public function __construct(
-        private readonly CategoryRepository $categoryRepository,
         private readonly EntityManagerInterface $entityManager,
+        private readonly CategoryRepository $categoryRepository,
+        private readonly RessourceRepository $ressourceRepository,
     ) {
     }
 
@@ -90,13 +92,21 @@ final class CategoryController extends AbstractController
     {
         /** @var User $currentUser */
         $currentUser = $this->getUser();
+
         if ($category->getOwner() !== $currentUser) {
             throw $this->createAccessDeniedException('Vous ne pouvez pas supprimer cette categorie.');
         }
 
         if ($this->isCsrfTokenValid('delete_category_' . $category->getId(), $request->request->get('_token'))) {
-            $this->entityManager->remove($category);
-            $this->entityManager->flush();
+            $linkedRessources = $this->ressourceRepository->findBy([
+                'owner' => $category->getOwner(),
+                'category' => $category,
+            ]);
+
+            if (empty($linkedRessources)) {
+                $this->entityManager->remove($category);
+                $this->entityManager->flush();
+            }
         }
 
         return $this->redirectToRoute('category_index');

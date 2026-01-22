@@ -2,8 +2,12 @@
 @import 'bootstrap-select/sass/bootstrap-select.scss';
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 
+@import "flatpickr/dist/flatpickr.css";
+@import "flatpickr/dist/plugins/confirmDate/confirmDate.css";
+
 @import 'navbar';
 @import 'ressources';
 @import 'ressource_detail';
 @import 'edit_ressource';
 @import 'form';
+@import 'calendar';

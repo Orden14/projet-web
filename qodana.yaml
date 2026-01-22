@@ -33,7 +33,6 @@ exclude:
             - rector.php
             - src/Kernel.php
             - config/preload.php
-            - src\DataFixtures\GuildEventFixtures.php
     -   name: HttpUrlsUsage
     -   name: JSUnusedGlobalSymbols
         paths:
@@ -76,13 +75,6 @@ exclude:
     - name: JSValidateTypes
       paths:
           - assets\controllers\datetime_picker_controller.js
-    - name: ConstructorTwigExtensionHeavyConstructor
-      paths:
-          - src\Twig\Extension\GuildEvent\EventParticipationExtension.php
-          - src\Twig\Extension\GuildEvent\EventPermissionExtension.php
-    - name: PhpFeatureEnvyLocalInspection
-      paths:
-          - src\Controller\GuildEvent\EventAttendanceController.php
     - name: PhpStanGlobal
       paths:
           - src\Util\Form\FormFlashHelper.php

@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Enum\RolesEnum;
 use App\Form\ContactType;
 use App\Repository\ContactRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,6 +76,7 @@ final class ContactController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $contact->setUpdateDate(new DateTime());
             $this->entityManager->flush();
 
             return $this->redirectToRoute('contact_index');

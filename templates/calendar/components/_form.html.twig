@@ -1,0 +1,44 @@
+{% set event_form = event_form ?? form %}
+
+{{ form_start(event_form) }}
+<div class="mb-3">
+    {{ form_label(event_form.title) }}
+    {{ form_widget(event_form.title, { attr: { class: 'form-control', placeholder: 'Titre' } }) }}
+    {{ form_errors(event_form.title) }}
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        {{ form_label(event_form.startDate) }}
+        {{ form_widget(event_form.startDate, { attr: { class: 'form-control' } }) }}
+        {{ form_errors(event_form.startDate) }}
+    </div>
+    <div class="col-md-6 mb-3">
+        {{ form_label(event_form.endDate) }}
+        {{ form_widget(event_form.endDate, { attr: { class: 'form-control' } }) }}
+        {{ form_errors(event_form.endDate) }}
+    </div>
+</div>
+
+<div class="mb-3">
+    {{ form_label(event_form.color) }}
+    {{ form_widget(event_form.color, { attr: { class: 'form-control form-control-color' } }) }}
+    {{ form_errors(event_form.color) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(event_form.description) }}
+    {{ form_widget(event_form.description, { attr: { class: 'form-control', rows: 3 } }) }}
+    {{ form_errors(event_form.description) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(event_form.category) }}
+    {{ form_widget(event_form.category, { attr: { class: 'form-select' } }) }}
+    {{ form_errors(event_form.category) }}
+</div>
+
+<div class="d-grid">
+    <button type="submit" class="btn btn-primary">Enregistrer l’événement</button>
+</div>
+{{ form_end(event_form) }}

@@ -16,6 +16,15 @@ class CalendarEvent extends AbstractUserOwnedEntity
     #[ORM\Column]
     private DateTime $endDate;
 
+    #[ORM\Column(length: 255)]
+    private string $color;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->color = '#32a89e';
+    }
+
     final public function getStartDate(): DateTime
     {
         return $this->startDate;
@@ -36,6 +45,18 @@ class CalendarEvent extends AbstractUserOwnedEntity
     final public function setEndDate(DateTime $endDate): self
     {
         $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    final public function getColor(): string
+    {
+        return $this->color;
+    }
+
+    final public function setColor(string $color): self
+    {
+        $this->color = $color;
 
         return $this;
     }

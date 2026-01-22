@@ -7,6 +7,7 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 Encore.setOutputPath("public/build/")
     .setPublicPath("/build")
     .addEntry("app", "./assets/app.js")
+    .addEntry("calendar", "./assets/javascript/components/calendar/index.js")
     .splitEntryChunks()
     .enableStimulusBridge("./assets/controllers.json")
     .enableSingleRuntimeChunk()
