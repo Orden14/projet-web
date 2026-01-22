@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css?family=Muli:400,900&display=swap");
+
+:root {
+  --fc-border-color: rgb(39, 55, 72) !important;
+}
+
+.fc-list-day-cushion {
+  background-color: rgb(39, 55, 72) !important;
+}
+
+#calendar-holder {
+  font-family: "Muli", sans-serif;
+  width: 80%;
+  margin: 15px auto 0;
+}
+
+.fc-timegrid-body,
+.fc-daygrid-day {
+  cursor: pointer;
+}
+
+.fc-toolbar h2,
+.fc th {
+  font-weight: inherit;
+}
+
+#calendar-holder a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.fc-list-table .fc-list-event:hover td {
+  background-color: rgb(63, 58, 58);
+}
+
+@media screen and (max-width: 900px) {
+  #calendar-holder {
+    width: 100%;
+  }
+
+  .fc-header-toolbar {
+    flex-direction: column;
+  }
+
+  .fc-header-toolbar .fc-toolbar-chunk {
+    margin-bottom: 10px;
+  }
+
+  .fc-button {
+    font-size: 0.8em;
+    padding: 0.5em 1em;
+  }
+
+  #calendar-holder .fc-event,
+  #calendar-holder .fc-day {
+    font-size: 0.7em;
+    padding: 2px;
+  }
+
+  #calendar-holder .fc-toolbar h2 {
+    font-size: 1em;
+  }
+
+  #calendar-holder .fc-button {
+    font-size: 0.8em;
+    padding: 0.5em 1em;
+  }
+}

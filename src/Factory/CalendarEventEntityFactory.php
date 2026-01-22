@@ -3,6 +3,7 @@
 namespace App\Factory;
 
 use App\Entity\CalendarEvent;
+use App\Entity\User;
 use App\Simple\UserOwnedEntityData;
 use DateTime;
 
@@ -19,6 +20,19 @@ final class CalendarEventEntityFactory extends AbstractEntityFactory
             ->setCategory($userOwnedEntityData->getCategory())
             ->setStartDate($startDate)
             ->setEndDate($endDate)
+        ;
+
+        $this->entity = $calendarEvent;
+    }
+
+    public function buildFreshEntity(User $owner): void
+    {
+        $calendarEvent = new CalendarEvent();
+
+        $calendarEvent
+            ->setOwner($owner)
+            ->setStartDate(new DateTime())
+            ->setEndDate(new DateTime())
         ;
 
         $this->entity = $calendarEvent;

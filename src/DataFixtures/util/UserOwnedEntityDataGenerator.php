@@ -18,7 +18,7 @@ final class UserOwnedEntityDataGenerator
     ) {
     }
 
-    public function generateRandomData(User $user): UserOwnedEntityData
+    public function generateRandomData(User $user, bool $calendarEvent = false): UserOwnedEntityData
     {
         $faker = Factory::create();
 
@@ -28,7 +28,7 @@ final class UserOwnedEntityDataGenerator
 
         return (new UserOwnedEntityData())
             ->setOwner($user)
-            ->setTitle($faker->jobTitle)
+            ->setTitle($calendarEvent ? $faker->word() : $faker->jobTitle)
             ->setDescription($faker->realText())
             ->setCategory($faker->randomElement($this->categories))
         ;
