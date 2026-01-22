@@ -14,13 +14,15 @@
 		<tr data-contact--contact-filter-target="row"
 			data-name="{{ contact.contactName }}"
 			data-phone="{{ contact.contactNumber }}"
-			data-email="{{ contact.contactEmail }}">
+			data-email="{{ contact.contactEmail }}"
+			style="cursor: pointer;"
+			onclick="window.location.href='{{ path('contact_detail', { 'id': contact.id }) }}'">
 			<td>{{ contact.contactName }}</td>
 			<td>{{ contact.title }}</td>
 			<td>{{ contact.category.name }}</td>
 			<td>{{ contact.contactNumber}}</td>
 			<td>{{ contact.contactEmail}}</td>
-			<td class="text-end position-relative" data-controller="row-menu">
+			<td class="text-end position-relative" data-controller="row-menu" onclick="event.stopPropagation()">
 				<button class="btn btn-sm" type="button" data-action="click->row-menu#toggle">
 					<i class="bi bi-three-dots-vertical"></i>
 				</button>

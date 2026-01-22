@@ -101,4 +101,17 @@ final class ContactController extends AbstractController
 
         return $this->redirectToRoute('contact_index');
     }
+
+    #[Route('/{id}', name: 'detail', methods: ['GET'])]
+    public function detail(Contact $contact): Response
+    {
+        $currentUser = $this->getUser();
+        if ($contact->getOwner() !== $currentUser) {
+            throw $this->createAccessDeniedException('Vous ne pouvez pas accéder à ce contact.');
+        }
+
+        return $this->render('contact/detail.html.twig', [
+            'contact' => $contact,
+        ]);
+    }
 }

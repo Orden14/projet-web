@@ -10,7 +10,7 @@
 			<div class="search-container">
 				<input type="text" class="search-bar" placeholder="Recherche par nom, téléphone ou email" data-action="input->contact--contact-filter#filter">
 			</div>
-			<button class="add-button">
+			<button class="add-button" data-bs-toggle="modal" data-bs-target="#createContactModal">
 				<i class="bi bi-plus"></i>
 				Ajouter</button>
 		</div>
@@ -25,4 +25,5 @@
 			{{ include('components/contact/_table.html.twig') }}
 		</div>
 	</div>
+	{{ include('contact/component/modal_create_contact.html.twig') }}
 {% endblock %}
