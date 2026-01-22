@@ -11,15 +11,25 @@
 	</thead>
 	<tbody>
 		{% for ressource in ressources %}
-
 		{% set date = ressource.getUpdateDate() ? ressource.getUpdateDate()|date('Y-m-d') : ressource.getCreationDate()|date('Y-m-d') %}
-
-		<tr data-ressources--filter-target="row"
+		{% set type = ressource.getType().value %}
+		<tr data-controller="ressources--row"
+			data-ressources--filter-target="row"
 			data-name="{{ ressource.title }}"
-			data-type="{{ ressource.getType().value }}"
+			data-type="{{ type }}"
 			data-category="{{ ressource.category.name }}"
 			data-date="{{ date }}"
-			data-favorite="{{ ressource.isFavorite() ? 'true' : 'false' }}">
+			data-favorite="{{ ressource.isFavorite() ? 'true' : 'false' }}"
+			{% if type == 'url' %}
+			data-action="click->ressources--row#open"
+			data-ressources--row-url-value="{{ ressource.url }}"
+			style="cursor: pointer;"
+			{% endif %}
+			{% if ressource.description %}
+			data-bs-toggle="tooltip"
+			data-bs-placement="top"
+			title="{{ ressource.description }}"
+			{% endif %}>
 			<td data-controller="favorite" data-favorite-target="star">
 				<form method="post" action="{{ path('ressource_toggle_favorite', { 'id': ressource.id }) }}" style="display: inline;">
 					<input type="hidden" name="_token" value="{{ csrf_token('favorite' ~ ressource.id) }}">
