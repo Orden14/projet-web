@@ -23,4 +23,9 @@ class File extends AbstractRessource
 
         return $this;
     }
+
+    final public function isFileNameInitialized(): bool
+    {
+        return isset($this->fileName);
+    }
 }
