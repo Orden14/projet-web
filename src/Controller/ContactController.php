@@ -25,13 +25,20 @@ final class ContactController extends AbstractController
     }
 
     #[Route('/', name: 'index', methods: ['GET'])]
-    public function index(): Response
+    public function index(Request $request): Response
     {
         /** @var User $currentUser */
         $currentUser = $this->getUser();
 
-        return $this->render('contact/contact.html.twig', [
+        $contact = new Contact();
+        $form = $this->createForm(ContactType::class, $contact, [
+            'action' => $this->generateUrl('contact_create'),
+        ]);
+        $form->handleRequest($request);
+
+        return $this->render('contact/index.html.twig', [
             'contacts' => $this->contactRepository->findByUser($currentUser),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -39,7 +46,6 @@ final class ContactController extends AbstractController
     public function create(Request $request): Response
     {
         $contact = new Contact();
-
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
 
@@ -57,8 +63,14 @@ final class ContactController extends AbstractController
         return $this->redirectToRoute('contact_index');
     }
 
+    #[Route('/modifier/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Contact $contact): Response
     {
+        $currentUser = $this->getUser();
+        if ($contact->getOwner() !== $currentUser) {
+            throw $this->createAccessDeniedException('Vous ne pouvez pas supprimer ce contact.');
+        }
+
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
 
@@ -68,9 +80,25 @@ final class ContactController extends AbstractController
             return $this->redirectToRoute('contact_index');
         }
 
-        return $this->render('contact/edit_contact.html.twig', [
+        return $this->render('contact/edit.html.twig', [
             'contact' => $contact,
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/supprimer/{id}', name: 'delete', methods: ['POST'])]
+    public function delete(Request $request, Contact $contact): Response
+    {
+        $currentUser = $this->getUser();
+        if ($contact->getOwner() !== $currentUser) {
+            throw $this->createAccessDeniedException('Vous ne pouvez pas supprimer ce contact.');
+        }
+
+        if ($this->isCsrfTokenValid('delete' . $contact->getId(), $request->request->get('_token'))) {
+            $this->entityManager->remove($contact);
+            $this->entityManager->flush();
+        }
+
+        return $this->redirectToRoute('contact_index');
     }
 }

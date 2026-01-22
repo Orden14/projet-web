@@ -85,6 +85,11 @@ final class RessourceController extends AbstractController
     {
         $ressource = $this->ressourceRepository->find($id);
 
+        $currentUser = $this->getUser();
+        if ($ressource->getOwner() !== $currentUser) {
+            throw $this->createAccessDeniedException('Vous ne pouvez pas supprimer ce contact.');
+        }
+
         $form = $this->ressourceFormsFactory->build($ressource, true);
         $form->handleRequest($request);
 
@@ -104,10 +109,10 @@ final class RessourceController extends AbstractController
     #[Route('/detail/{id}', name: 'detail', methods: ['GET'])]
     public function detail(int $id): Response
     {
-        $ressource = $this->ressourceRepository->find($id);
-
         /** @var User $currentUser */
         $currentUser = $this->getUser();
+
+        $ressource = $this->ressourceRepository->find($id);
 
         if ($ressource->getOwner() !== $currentUser) {
             throw $this->createAccessDeniedException("Vous n'avez pas accès à cette ressource.");

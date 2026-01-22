@@ -25,8 +25,13 @@
 					<i class="bi bi-three-dots-vertical"></i>
 				</button>
 				<div class="filter-menu row-menu" data-row-menu-target="menu">
-					<button type="button" class="row-menu-item">Modifier</button>
-					<button type="button" class="row-menu-item">Supprimer</button>
+					<a type="button" class="row-menu-item" href="{{ path('contact_edit', { 'id': contact.id }) }}">Modifier</a>
+					<form id="delete{{ contact.id }}" method="post" action="{{ path('contact_delete', {'id': contact.id}) }}" data-controller="confirm">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contact.id) }}">
+						<a type="button" class="row-menu-item flex-shrink-0" id="{{ contact.id }}" data-action="confirm#confirmDeletion" title="Supprimer" data-bs-toggle="tooltip">
+							Supprimer
+						</a>
+					</form>
 				</div>
 			</td>
 		</tr>
