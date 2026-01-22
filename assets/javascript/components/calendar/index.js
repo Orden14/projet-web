@@ -58,13 +58,10 @@ $(document).ready(function () {
         },
         initialView,
         navLinks: true,
-        // javascript
-        // Fichier: 'assets/javascript/components/calendar/index.js'
-        // Modifiez uniquement la fonction eventContent comme ci-dessous
         eventContent: function (arg) {
             const pad = (n) => String(n).padStart(2, "0");
             const start = arg.event.start;
-            const end = arg.event.end ?? addHours(arg.event.start, 2); // fallback si end manquant
+            const end = arg.event.end ?? addHours(arg.event.start, 2);
             const timeRange = `${pad(start.getHours())}:${pad(start.getMinutes())} - ${pad(end.getHours())}:${pad(end.getMinutes())}`;
 
             let container;

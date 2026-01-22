@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Enum\RolesEnum;
 use App\Factory\CalendarEventEntityFactory;
 use App\Form\CalendarEventType;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -94,9 +95,10 @@ final class CalendarController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $calendarEvent->setUpdateDate(new DateTime());
             $this->entityManager->flush();
 
-            return $this->redirectToRoute('calendar_index', ['id' => $calendarEvent->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('calendar_event_show', ['id' => $calendarEvent->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('calendar/edit.html.twig', [
