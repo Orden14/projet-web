@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ ressource.title }}{% endblock %}
+
+{% block body %}
+	<div class="ressources-section">
+		<div class="ressources-header">
+			<div>
+				<a href="{{ path('ressource_index', {'id': ressource.parent.id ?? ''}) }}" class="btn-back-material d-inline-flex align-items-center text-decoration-none" title="Retour">
+					<i class="bi bi-arrow-left"></i>
+				</a>
+			</div>
+			<div style="flex: 1; display: flex; align-items: center; gap: 0.75rem;">
+				<h2 style="margin: 0;">{{ ressource.title }}</h2>
+				<div>
+					{% for tag in ressource.tags %}
+						<span class="tag" style="background-color: {{ tag.color }}">{{ tag.title }}</span>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="text-end position-relative" data-controller="row-menu">
+				<button class="btn btn-sm" type="button" data-action="click->row-menu#toggle">
+					<i class="bi bi-three-dots-vertical"></i>
+				</button>
+				<div class="filter-menu row-menu" data-row-menu-target="menu">
+					<a class="row-menu-item no-underline text-decoration-none" href="{{ path('ressource_edit', { 'id': ressource.id }) }}">Modifier</a>
+					<form id="delete{{ ressource.id }}" method="post" action="{{ path('ressource_delete', {'id': ressource.id}) }}" data-controller="confirm">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ressource.id) }}">
+						<a type="button" class="row-menu-item flex-shrink-0" id="{{ ressource.id }}" data-action="confirm#confirmDeletion" title="Supprimer" data-bs-toggle="tooltip">
+							Supprimer
+						</a>
+					</form>
+					{% if ressource.type.value == "file" %}
+						<a href="{{ asset('uploads/' ~ ressource.getFileName()) }}" class="row-menu-item" download>Télécharger</a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+
+		<div class="detail-content mt-4">
+			<!-- Infos principales -->
+			<div class="row mb-4">
+				<div class="col-md-6">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Informations</h5>
+							<dl class="row">
+								<dt class="col-sm-4">Catégorie:</dt>
+								<dd class="col-sm-8">{{ ressource.category.name }}</dd>
+
+								<dt class="col-sm-4">Créée:</dt>
+								<dd class="col-sm-8">{{ ressource.creationDate|date('d/m/Y') }}</dd>
+
+								{% if ressource.updateDate %}
+									<dt class="col-sm-4">Modifiée:</dt>
+									<dd class="col-sm-8">{{ ressource.updateDate|date('d/m/Y') }}</dd>
+								{% endif %}
+							</dl>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Description -->
+			{% if ressource.description %}
+				<div class="card mb-4">
+					<div class="card-body">
+						<h5 class="card-title">Description</h5>
+						<p class="card-text">{{ ressource.description }}</p>
+					</div>
+				</div>
+			{% endif %}
+
+			<!-- Contenu spécifique par type -->
+			{% if ressource.type.value == 'url' %}
+				<div class="card mb-4">
+					<div class="card-body">
+						<h5 class="card-title">Lien</h5>
+						<a href="{{ ressource.url }}" target="_blank" class="btn btn-primary">
+							<i class="bi bi-box-arrow-up-right"></i> Ouvrir le lien
+						</a>
+						<p class="mt-2 text-muted small">{{ ressource.url }}</p>
+					</div>
+				</div>
+			{% elseif ressource.type.value == 'note' %}
+				<div class="card mb-4">
+					<div class="card-body">
+						<h5 class="card-title">Note</h5>
+						<div class="card-text" style="white-space: pre-wrap;">{{ ressource.content }}</div>
+					</div>
+				</div>
+			{% elseif ressource.type.value == 'file' %}
+				<div class="card mb-4">
+					<div class="card-body">
+						<h5 class="card-title">Fichier</h5>
+						<a href="{{ asset('uploads/' ~ ressource.getFileName()) }}" class="btn btn-primary" download>
+							<i class="bi bi-download"></i> Télécharger le fichier
+						</a>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}
+

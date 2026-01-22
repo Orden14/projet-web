@@ -13,16 +13,21 @@
 		{% for ressource in ressources %}
 		{% set date = ressource.getUpdateDate() ? ressource.getUpdateDate()|date('Y-m-d') : ressource.getCreationDate()|date('Y-m-d') %}
 		{% set type = ressource.getType().value %}
-		<tr data-controller="ressources--row"
-			data-ressources--filter-target="row"
+		<tr data-ressources--filter-target="row"
 			data-name="{{ ressource.title }}"
 			data-type="{{ type }}"
 			data-category="{{ ressource.category.name }}"
 			data-date="{{ date }}"
 			data-favorite="{{ ressource.isFavorite() ? 'true' : 'false' }}"
 			{% if type == 'url' %}
+			data-controller="ressources--row"
 			data-action="click->ressources--row#open"
 			data-ressources--row-url-value="{{ ressource.url }}"
+			style="cursor: pointer;"
+			{% elseif type != 'folder' %}
+			data-controller="ressources--row"
+			data-action="click->ressources--row#openDetail"
+			data-ressources--row-detail-url-value="{{ path('ressource_detail', { 'id': ressource.id }) }}"
 			style="cursor: pointer;"
 			{% endif %}
 			{% if ressource.description %}
