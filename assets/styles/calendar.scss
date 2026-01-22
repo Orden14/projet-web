@@ -1,17 +1,33 @@
-@import url("https://fonts.googleapis.com/css?family=Muli:400,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
 
 :root {
-  --fc-border-color: rgb(39, 55, 72) !important;
+  /* Palette type Google */
+  --fc-border-color: #e6e6e6 !important;
+  --fc-page-bg-color: #ffffff !important;
+  --fc-neutral-bg-color: #fafafa !important;
+  --fc-neutral-text-color: #5f6368 !important;
+  --fc-button-text-color: #1967d2 !important;
+  --fc-button-bg-color: #e8f0fe !important;
+  --fc-button-border-color: transparent !important;
+  --fc-button-hover-bg-color: #d2e3fc !important;
+  --fc-button-hover-border-color: transparent !important;
+  --fc-button-active-bg-color: #d2e3fc !important;
+  --fc-button-active-border-color: transparent !important;
+  --fc-today-bg-color: #e8f0fe !important;
 }
 
 .fc-list-day-cushion {
-  background-color: rgb(39, 55, 72) !important;
+  background-color: #f1f3f4 !important;
+  color: #202124 !important;
+  font-weight: 600;
+  border: 1px solid #e6e6e6;
 }
 
 #calendar-holder {
-  font-family: "Muli", sans-serif;
-  width: 80%;
-  margin: 15px auto 0;
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  width: 90%;
+  margin: 24px auto 0;
+  color: #202124;
 }
 
 .fc-timegrid-body,
@@ -21,7 +37,8 @@
 
 .fc-toolbar h2,
 .fc th {
-  font-weight: inherit;
+  font-weight: 600;
+  color: #202124;
 }
 
 #calendar-holder a {
@@ -29,8 +46,63 @@
   text-decoration: none;
 }
 
+.fc-header-toolbar {
+  gap: 12px;
+}
+.fc-toolbar-chunk .fc-button {
+  border-radius: 18px;
+  background: var(--fc-button-bg-color);
+  color: var(--fc-button-text-color);
+  border: 1px solid var(--fc-button-border-color);
+  box-shadow: none;
+}
+.fc-toolbar-chunk .fc-button:hover {
+  background: var(--fc-button-hover-bg-color);
+}
+.fc-toolbar-title {
+  font-size: 1.25rem;
+}
+
+.fc-timegrid-slot,
+.fc-daygrid-day-frame {
+  background-color: var(--fc-page-bg-color);
+}
+
+/* Événements “card” */
+.fc-event {
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 4px 8px !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+.fc-timegrid-event .fc-event-main,
+.fc-daygrid-event .fc-event-main {
+  padding: 2px 0;
+}
+.fc-event:hover {
+  filter: brightness(0.98);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+.fc-event-time,
+.fc-event-title {
+  font-size: 0.85rem;
+}
+.fc-timegrid-event .fc-event-time {
+  color: #5f6368;
+}
+
+/* Pastilles mois à la Google */
+.fc-daygrid-event-dot {
+  width: 8px;
+  height: 8px;
+  border-width: 6px;
+}
+.fc-daygrid-block-event {
+  margin: 2px 0;
+}
+
 .fc-list-table .fc-list-event:hover td {
-  background-color: rgb(63, 58, 58);
+  background-color: #f8f9fa;
 }
 
 @media screen and (max-width: 900px) {
@@ -47,22 +119,22 @@
   }
 
   .fc-button {
-    font-size: 0.8em;
+    font-size: 0.9em;
     padding: 0.5em 1em;
   }
 
   #calendar-holder .fc-event,
   #calendar-holder .fc-day {
-    font-size: 0.7em;
+    font-size: 0.85em;
     padding: 2px;
   }
 
   #calendar-holder .fc-toolbar h2 {
-    font-size: 1em;
+    font-size: 1.1em;
   }
 
   #calendar-holder .fc-button {
-    font-size: 0.8em;
+    font-size: 0.9em;
     padding: 0.5em 1em;
   }
 }
