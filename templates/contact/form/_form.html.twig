@@ -1,0 +1,47 @@
+{% set contact_form = contact_form ?? form %}
+
+{{ form_start(contact_form) }}
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        {{ form_label(contact_form.contactName) }}
+        {{ form_widget(contact_form.contactName, { attr: { class: 'form-control', placeholder: 'Nom du contact' } }) }}
+        {{ form_errors(contact_form.contactName) }}
+    </div>
+    <div class="col-md-6 mb-3">
+        {{ form_label(contact_form.title) }}
+        {{ form_widget(contact_form.title, { attr: { class: 'form-control', placeholder: 'Titre' } }) }}
+        {{ form_errors(contact_form.title) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        {{ form_label(contact_form.contactNumber) }}
+        {{ form_widget(contact_form.contactNumber, { attr: { class: 'form-control', placeholder: 'Numéro de téléphone' } }) }}
+        {{ form_errors(contact_form.contactNumber) }}
+    </div>
+    <div class="col-md-6 mb-3">
+        {{ form_label(contact_form.contactEmail) }}
+        {{ form_widget(contact_form.contactEmail, { attr: { class: 'form-control', placeholder: 'Adresse e‑mail', type: 'email' } }) }}
+        {{ form_errors(contact_form.contactEmail) }}
+    </div>
+</div>
+
+<div class="mb-3">
+    {{ form_label(contact_form.category) }}
+    {{ form_widget(contact_form.category, { attr: { class: 'form-select' } }) }}
+    {{ form_errors(contact_form.category) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(contact_form.description) }}
+    {{ form_widget(contact_form.description, { attr: { class: 'form-control', rows: 4, placeholder: 'Description' } }) }}
+    {{ form_errors(contact_form.description) }}
+</div>
+
+<div class="d-grid">
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+</div>
+
+{{ form_end(contact_form) }}

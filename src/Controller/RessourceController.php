@@ -10,13 +10,16 @@ use App\Entity\User;
 use App\Enum\RessourceTypeEnum;
 use App\Enum\RolesEnum;
 use App\Factory\RessourceFormFactory;
+use App\Interface\RessourceInterface;
 use App\Repository\CategoryRepository;
 use App\Repository\FolderRepository;
 use App\Repository\RessourceRepository;
 use App\Service\Ressource\RessourceFormService;
 use App\Util\File\FileManager;
+use App\Util\Ressource\RessourceBreadcrumbUtil;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -47,24 +50,16 @@ final class RessourceController extends AbstractController
             throw $this->createAccessDeniedException("Vous n'avez pas accès à ce dossier.");
         }
 
-        $breadcrumb = [];
-        $cursor = $folder;
-        while ($cursor) {
-            $breadcrumb[] = $cursor;
-            $cursor = $cursor->getParent();
-        }
-        $breadcrumb = array_reverse($breadcrumb);
-
         return $this->render('ressource/index.html.twig', [
             'current_folder' => $folder,
             'folders' => $this->folderRepository->findInsideFolderByUser($currentUser, $folder),
+            'breadcrumb' => RessourceBreadcrumbUtil::generateBreadcrumb($folder),
             'ressources' => $this->ressourceRepository->findMainRessourcesForUserByFolder($currentUser, $folder),
             'categories' => $this->categoryRepository->findByUser($currentUser),
             'folder_form' => $this->ressourceFormsFactory->build(new Folder())->createView(),
             'file_form' => $this->ressourceFormsFactory->build(new File())->createView(),
             'url_form' => $this->ressourceFormsFactory->build(new Url())->createView(),
             'note_form' => $this->ressourceFormsFactory->build(new Note())->createView(),
-            'breadcrumb' => $breadcrumb,
         ]);
     }
 
@@ -90,6 +85,11 @@ final class RessourceController extends AbstractController
     {
         $ressource = $this->ressourceRepository->find($id);
 
+        $currentUser = $this->getUser();
+        if ($ressource->getOwner() !== $currentUser) {
+            throw $this->createAccessDeniedException('Vous ne pouvez pas supprimer ce contact.');
+        }
+
         $form = $this->ressourceFormsFactory->build($ressource, true);
         $form->handleRequest($request);
 
@@ -109,10 +109,10 @@ final class RessourceController extends AbstractController
     #[Route('/detail/{id}', name: 'detail', methods: ['GET'])]
     public function detail(int $id): Response
     {
-        $ressource = $this->ressourceRepository->find($id);
-
         /** @var User $currentUser */
         $currentUser = $this->getUser();
+
+        $ressource = $this->ressourceRepository->find($id);
 
         if ($ressource->getOwner() !== $currentUser) {
             throw $this->createAccessDeniedException("Vous n'avez pas accès à cette ressource.");
@@ -121,26 +121,6 @@ final class RessourceController extends AbstractController
         return $this->render('ressource/detail.html.twig', [
             'ressource' => $ressource,
         ]);
-    }
-
-    #[Route('/toggle-favorite/{id}', name: 'toggle_favorite', methods: ['POST'])]
-    public function toggleFavorite(Request $request, int $id): Response
-    {
-        $ressource = $this->ressourceRepository->find($id);
-
-        /** @var User $currentUser */
-        $currentUser = $this->getUser();
-
-        if ($ressource->getOwner() !== $currentUser) {
-            throw $this->createAccessDeniedException("Vous n'avez pas accès à cette ressource.");
-        }
-
-        if ($this->isCsrfTokenValid('favorite' . $ressource->getId(), $request->request->get('_token'))) {
-            $ressource->setFavorite(!$ressource->isFavorite());
-            $this->entityManager->flush();
-        }
-
-        return $this->json(['favorite' => $ressource->isFavorite()]);
     }
 
     #[Route('/supprimer/{id}', name: 'delete', methods: ['POST'])]
@@ -167,5 +147,26 @@ final class RessourceController extends AbstractController
         }
 
         return $this->redirectToRoute('ressource_index', ['id' => $parentFolder?->getId()]);
+    }
+
+    #[Route('/toggle-favorite/{id}', name: 'toggle_favorite', methods: ['POST'])]
+    public function toggleFavorite(Request $request, int $id): JsonResponse
+    {
+        /** @var ?RessourceInterface $ressource */
+        $ressource = $this->ressourceRepository->find($id);
+
+        /** @var User $currentUser */
+        $currentUser = $this->getUser();
+
+        if ($ressource->getOwner() !== $currentUser) {
+            throw $this->createAccessDeniedException("Vous n'avez pas accès à cette ressource.");
+        }
+
+        if ($this->isCsrfTokenValid('favorite' . $ressource->getId(), $request->request->get('_token'))) {
+            $ressource->setFavorite(!$ressource->isFavorite());
+            $this->entityManager->flush();
+        }
+
+        return $this->json(['favorite' => $ressource->isFavorite()]);
     }
 }

@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un contact{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Modifier un contact</h1>
+        {{ include('contact/form/_form.html.twig', { contact_form: form }) }}
+    </div>
+{% endblock %}

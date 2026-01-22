@@ -70,18 +70,22 @@ final readonly class RessourceFormService
         /** @var UploadedFile|null $uploadedFile */
         $uploadedFile = $form->get('uploadFile')->getData();
 
-        if ($uploadedFile) {
+        if (!$uploadedFile) {
+            return;
+        }
+
+        if ($file->isFileNameInitialized()) {
             $this->fileManager->removeFile(
                 $file->getFileName(),
                 $this->parameterBag->get('uploads_directory')
             );
-
-            $fileName = $this->fileManager->uploadFile(
-                $uploadedFile,
-                $this->parameterBag->get('uploads_directory')
-            );
-
-            $file->setFileName($fileName);
         }
+
+        $fileName = $this->fileManager->uploadFile(
+            $uploadedFile,
+            $this->parameterBag->get('uploads_directory')
+        );
+
+        $file->setFileName($fileName);
     }
 }
