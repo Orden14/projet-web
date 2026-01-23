@@ -1,31 +1,81 @@
-services:
-    db:
-        image: yobasystems/alpine-mariadb:11.4.9
-        container_name: db_projetweb
-        restart: 'no'
-        volumes:
-            - db-data:/var/lib/mysql
-        environment:
-            MYSQL_ROOT_PASSWORD: pass123
-        ports:
-            - "3306:3306"
-        networks:
-            - dev
-    phpmyadmin:
-        image: phpmyadmin
-        container_name: phpmyadmin_projetweb
-        restart: 'no'
-        depends_on:
-            - db
-        ports:
-            - "8080:80"
-        environment:
-            PMA_HOST: db
-        networks:
-            - dev
+version: '3.8'
 
-networks:
-    dev:
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app_projetweb
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/vendor
+    environment:
+      APP_ENV: dev
+      APP_SECRET: ${APP_SECRET:-SuperSecretKey}
+      DATABASE_URL: mysql://root:${DB_PASSWORD:-pass123}@db:3306/${DB_NAME:-projetweb}?serverVersion=11.4.9-MariaDB
+      APP_TIMEZONE: Europe/Paris
+      MAILER_DSN: sendmail://default
+      LOCK_DSN: flock
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app_network
+    entrypoint: /app/docker/entrypoint.sh
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_projetweb
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/app
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./public:/app/public:ro
+    depends_on:
+      - app
+    networks:
+      - app_network
+    restart: unless-stopped
+
+  db:
+    image: yobasystems/alpine-mariadb:11.4.9
+    container_name: db_projetweb
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-pass123}
+      MYSQL_DATABASE: ${DB_NAME:-projetweb}
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin_projetweb
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: ${DB_PASSWORD:-pass123}
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - app_network
 
 volumes:
-    db-data:
+  db_data:
+
+networks:
+  app_network:
+    driver: bridge
