@@ -50,9 +50,24 @@ yarn truncate-database
 yarn server-start
 ```
 
-### Accéder au projet et aux outils sur l'environnement de développement
 - L'application est disponible sur `http://localhost:8000`
 - PhpMyAdmin est disponible sur `http://localhost:8080` (username : root / mdp : pass123)
+
+### Installation complète full docker
+
+1. Cloner le repository et accéder au dossier du projet :
+```bash
+git clone https://github.com/Orden14/projet-web
+
+cd projet-web
+```
+
+2. Lancer le docker compose : 
+```bash
+docker-compose -f docker-compose-full.yml up -d --build
+```
+
+- L'application est disponible sur `http://localhost`
 
 ### Utilisateurs de tests
 - Admin :
