@@ -28,7 +28,7 @@ final class UserOwnedEntityDataGenerator
 
         return (new UserOwnedEntityData())
             ->setOwner($user)
-            ->setTitle($calendarEvent ? $faker->word() : $faker->jobTitle)
+            ->setTitle($calendarEvent ? $faker->word() : $faker->jobTitle())
             ->setDescription($faker->realText())
             ->setCategory($faker->randomElement($this->categories))
         ;
